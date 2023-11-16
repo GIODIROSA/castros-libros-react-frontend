@@ -6,6 +6,10 @@
     align-items: center;
     padding: 1rem;
   }
+
+  .nav-links p {
+margin-right: 1rem;
+  }
   
   .nav-links {
     list-style-type: none;

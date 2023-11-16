@@ -22,6 +22,7 @@ const Navbar = () => {
           <li>
             <NavLink to="/favorites">Favoritos</NavLink>
           </li>
+          <p>|</p>
           <li>
             <NavLink to="/cart">{cartIconSvg}</NavLink>
           </li>
