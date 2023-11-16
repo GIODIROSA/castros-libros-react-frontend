@@ -34,3 +34,15 @@
 // }
 
 // export default Favorites;
+
+import React from 'react'
+
+const Favorites = () => {
+  return (
+    <div>
+      <h2>Aquí van los favoritos</h2>
+    </div>
+  )
+}
+
+export default Favorites
