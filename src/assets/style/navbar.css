@@ -1,0 +1,15 @@
+.navbar {
+    background: #FFFFFF;
+    color: #000000;
+    display: flex;
+    justify-content: space-between;
+}
+
+.libreria-navbar_logo {
+    max-width: 15%; 
+     height: auto; 
+    }
+
+.libreria-navbar_contenedor-listado {
+    padding-right: 10%;
+}
