@@ -7,9 +7,10 @@
 
 .libreria-navbar_logo {
     max-width: 15%; 
-     height: auto; 
+     height: auto;
+     padding-left: 3%; 
     }
 
 .libreria-navbar_contenedor-listado {
-    padding-right: 10%;
+    padding-right: 3%;
 }

@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 const LayoutPublic = () => {
   return (
@@ -8,15 +9,7 @@ const LayoutPublic = () => {
         <Navbar />
         <Outlet />
       </div>
-      <footer
-        style={{
-          backgroundColor: "lightgray",
-          padding: "20px",
-          textAlign: "center",
-        }}
-      >
-        Este es el footer de mi aplicación.
-      </footer>
+      <Footer />
     </>
   );
 };
