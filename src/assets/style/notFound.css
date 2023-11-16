@@ -1,0 +1,32 @@
+.NotFoundContainer {
+    background-color: #5D573F;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .NotFoundHeading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .NotFoundText {
+    font-size: 18px;
+  }
+  
+  .Button {
+    background-color: #fff;
+    color: #5D573F;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    text-decoration: none;
+  }
