@@ -22,7 +22,7 @@ export const FavoritesProvider = ({ children }) => {
   //fetchData: función para obtener la información de los libros desde el backend
   const fetchData = async () => { 
     try {
-      const response = await axios.get('http://localhost:5000/api/books'); //verificar la ruta del servidor
+      const response = await axios.get('http://localhost:5000/api/products'); //verificar la ruta del servidor
       setBooks(response.data); //almacenar los libros en el estado books
     } catch (error) {
       console.error('Error al obtener libros desde el backend', error);
@@ -35,18 +35,18 @@ export const FavoritesProvider = ({ children }) => {
   }, []);
 
   //handleToggleLike: función para actualizar la propiedad "producto_favorito" de un libro
-  const handleToggleLike = async (bookId) => {
+  const handleToggleLike = async (productId) => {
     setBooks((prevBooks) =>
       prevBooks.map((book) => //mapeo para actualizar la propiedad "producto_favorito" del libro
-        book.id === bookId ? { ...book, producto_favorito: !book.producto_favorito } : book 
+        book.producto_id === productId ? { ...book, producto_favorito: !book.producto_favorito } : book 
         //si el id del libro es igual al id seleccionado, "producto_favorito" cambia entre false/true
-        )
+      )
     );
 
     //una vez actualizada la propiedad "producto_favorito" en el frontend, se actualiza en el backend
     //y se obtiene la información actualizada de los libros
     try {
-      await axios.put(`http://localhost:5000/api/books/toggle-like/${bookId}`); //verificar la ruta del servidor
+      await axios.put(`http://localhost:5000/api/products/toggle-like/${productId}`); //verificar la ruta del servidor
       fetchData(); 
     } catch (error) {
       console.error('Error al actualizar el estado "me gusta" en el backend', error);
@@ -54,8 +54,8 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   //función para agregar un libro al array de favoritos
-  const handleAddToFavorites = (bookId) => {
-    setFavorites((prevFavorites) => [...prevFavorites, bookId]);
+  const handleAddToFavorites = (productId) => {
+    setFavorites((prevFavorites) => [...prevFavorites, productId]);
   };
 
   return (
