@@ -1,0 +1,86 @@
+
+
+.book-detail {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.25em;
+    background-color: white;
+    color: black;
+    border-radius: 0.5em;
+    box-shadow: 0 0.25em 0.375em rgba(0, 0, 0, 0.1);
+    margin: 3% 5% 5% 5%;
+  }
+  
+  .book-image {
+    width: 35%;
+  }
+  
+  .book-image img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 0.5em;
+  }
+  
+  .book-info {
+    width: 60%;
+  }
+  
+  .book-title {
+    font-size: 1.5em;
+    margin-bottom: 0.625em;
+  }
+  
+  .book-price {
+    font-size: 1.2em;
+    margin-bottom: 0.625em;
+  }
+  
+  .book-description {
+    margin-bottom: 1.25em;
+  }
+  
+  .quantity-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25em;
+  }
+  
+  .quantity-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity-button {
+    padding: 0.3125em 0.625em;
+    margin: 0 0.3125em;
+    border: none;
+    background-color: lightgrey;
+    cursor: pointer;
+    border-radius: 0.25em;
+  }
+  
+  .quantity {
+    font-size: 1.2em;
+    margin: 0 0.625em;
+  }
+  
+  .add-to-cart {
+    padding: 0.625em 1.25em;
+    border: 0.0625em solid black;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 0.25em;
+  }
+  
+  .add-to-favorites {
+    padding: 0.625em 1.25em;
+    background-color: lightgrey;
+    color: grey;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.25em;
+  }

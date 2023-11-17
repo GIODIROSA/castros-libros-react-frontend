@@ -11,11 +11,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="libreria-navbar_logo">
+      <nav className="libreria-navbar">
+        <div className="libreria-navbar_container-logo">
         {logoNavBarSvg}
       </div>
-        <ul className="nav-links">
+        <ul className="libreria-navbar_nav-links">
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
