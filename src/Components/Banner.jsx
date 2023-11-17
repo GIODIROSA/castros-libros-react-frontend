@@ -7,42 +7,41 @@ const Banner = () => {
   return (
     <Splide
       options={{
-        arrows: true,
-        gap: "1rem",
+        perPage: 1,
+        perMove: 1,
+        breakpoints: {
+          768: {
+            perPage: 1,
+            drag: true,
+            type: "loop",
+            autoplay: true,
+            pagination: true,
+            padding: {
+              right: "5rem",
+            },
+          },
+        },
+        autoplay: true,
+        arrows: false,
+        drag: false,
+        pagination: false,
       }}
       className="BannerContainer"
     >
       <SplideSlide className="Slide">
-        <img
-          className="SlideImage"
-          src="../../../public/img/banner1.jpg"
-          alt="Banner 1"
-        />
-        <div className="SlideContent">
-          <h1>¡Bienvenido a Castros librería online!</h1>
-          <p>Comprando con nosotros estarás ayudando a autores chilenos</p>
-        </div>
-      </SplideSlide>
-      <SplideSlide className="Slide">
-        <img
-          className="SlideImage"
-          src="../../../public/img/16elArca.jpg"
-          alt="Banner 1"
-        />
-        <div className="SlideContent">
-          <h1>¡Bienvenido a Castros librería online!</h1>
-          <p>Comprando con nosotros estarás ayudando a autores chilenos</p>
-        </div>
-      </SplideSlide>
-      <SplideSlide className="Slide">
-        <img
-          className="SlideImage"
-          src="../../../public/img/27elJardinSecreto.jpg"
-          alt="Banner 1"
-        />
-        <div className="SlideContent">
-          <h1>¡Bienvenido a Castros librería online!</h1>
-          <p>Comprando con nosotros estarás ayudando a autores chilenos</p>
+        <div className="castros-banner__contenedor">
+          <div className="castros-banner__imagen">
+            <img
+              className="SlideImage"
+              src="../../../public/img/banner1.jpg"
+              alt="imagen banner"
+            />
+          </div>
+
+          <div className="castros-banner__content">
+            <h1>¡Bienvenido a Castros librería online!</h1>
+            <p>Comprando con nosotros estarás ayudando a autores chilenos</p>
+          </div>
         </div>
       </SplideSlide>
     </Splide>
