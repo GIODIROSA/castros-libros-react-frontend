@@ -1,57 +1,93 @@
-.castros-contenedor__banner {
+.castros-banner {
   max-width: 1690px;
   margin: auto;
 }
 
-.castros-banner__imagen img {
-  width: 100%;
-  object-fit: cover;
-}
-
-
-
-
-
-
-.Splide {
-  flex: 1;
-  overflow: hidden;
-  border-radius: 10px;
-
-  @media (max-width: 576px) {
-    border-radius: 0;
-  }
-}
-
-.Slide {
+.castros-banner__contenedor {
   position: relative;
-  height: 30vw;
-
-  @media (max-width: 576px) {
-    height: 50vw;
-  }
 }
 
-.SlideImage {
+.castros-banner__contenedor-imagen {
+  height: 646px;
+  position: relative;
+}
+
+.castros-banner__filtro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+.castros-banner__contenedor-imagen img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-
-  @media (max-width: 576px) {
-    border-radius: 0;
-  }
 }
 
-.SlideContent {
+.castros-banner__contenido {
   position: absolute;
-  bottom: 10%;
-  left: 10%;
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  font-size: 2vw;
-
-  @media (max-width: 576px) {
-    font-size: 4vw;
-  }
+  bottom: 5rem;
+  left: 5rem;
 }
+
+.castros-banner-titulo {
+  color: #fff;
+  font-size: 3rem;
+}
+
+.castros-banner-parrafo {
+  color: #fff;
+  font-size: 26px;
+  line-height: 35px;
+  padding-bottom: 29px;
+}
+
+.castros-banner-btn {
+  background-color: #959273;
+  border-radius: 6px;
+  width: max-content;
+  height: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+
+.castros-banner-btn a {
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 768px) {
+
+  .castros-banner__contenedor-imagen {
+    height: 600px;
+  }
+
+  .castros-banner__contenido {
+    bottom: 2rem;
+    left: 2rem;
+  }
+
+  .castros-banner-titulo {
+    color: #fff;
+    font-size: 2rem;
+  }
+
+  .castros-banner-parrafo {
+    color: #fff;
+    font-size: 1rem;
+    padding-bottom: 29px;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {}

@@ -5,46 +5,86 @@ import "../assets/style/Banner.css";
 
 const Banner = () => {
   return (
-    <Splide
-      options={{
-        perPage: 1,
-        perMove: 1,
-        breakpoints: {
-          768: {
+    <>
+      <div className="castros-banner">
+        <Splide
+          options={{
             perPage: 1,
-            drag: true,
-            type: "loop",
-            autoplay: true,
-            pagination: true,
-            padding: {
-              right: "5rem",
+            perMove: 1,
+            breakpoints: {
+              768: {
+                perPage: 1,
+                drag: true,
+                type: "loop",
+                autoplay: true,
+                gap: 5,
+                pagination: true,
+                padding: {
+                  right: "5rem",
+                },
+              },
             },
-          },
-        },
-        autoplay: true,
-        arrows: false,
-        drag: false,
-        pagination: false,
-      }}
-      className="BannerContainer"
-    >
-      <SplideSlide className="Slide">
-        <div className="castros-banner__contenedor">
-          <div className="castros-banner__imagen">
-            <img
-              className="SlideImage"
-              src="../../../public/img/banner1.jpg"
-              alt="imagen banner"
-            />
-          </div>
+            autoplay: true,
+            arrows: false,
+            drag: true,
 
-          <div className="castros-banner__content">
-            <h1>¡Bienvenido a Castros librería online!</h1>
-            <p>Comprando con nosotros estarás ayudando a autores chilenos</p>
-          </div>
-        </div>
-      </SplideSlide>
-    </Splide>
+            pagination: false,
+          }}
+        >
+          <SplideSlide>
+            <div className="castros-banner__contenedor">
+              <div className="castros-banner__contenedor-imagen">
+                <img
+                  className="castros-banner-imagen"
+                  src="../../../public/img/banner1.jpg"
+                  alt="imagen banner"
+                />
+
+                <div className="castros-banner__filtro"></div>
+
+                <div className="castros-banner__contenido">
+                  <h1 className="castros-banner-titulo margin-none">
+                    Bajo la sombra de las letras
+                  </h1>
+                  <p className="castros-banner-parrafo margin-none">
+                    tú librería de confianza
+                  </p>
+                  <div className="castros-banner-btn">
+                    <a href="!#">Ver favorito</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SplideSlide>
+
+          <SplideSlide>
+            <div className="castros-banner__contenedor">
+              <div className="castros-banner__contenedor-imagen">
+                <img
+                  className="castros-banner-imagen"
+                  src="../../../public/img/banner1.jpg"
+                  alt="imagen banner"
+                />
+
+                <div className="castros-banner__filtro"></div>
+
+                <div className="castros-banner__contenido">
+                  <h1 className="castros-banner-titulo margin-none">
+                    Bajo la sombra de las letras
+                  </h1>
+                  <p className="castros-banner-parrafo margin-none">
+                    tú librería de confianza
+                  </p>
+                  <div className="castros-banner-btn">
+                    <a href="!#">Ver favorito</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SplideSlide>
+        </Splide>
+      </div>
+    </>
   );
 };
 
