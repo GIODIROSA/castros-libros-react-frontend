@@ -4,7 +4,7 @@ import "../assets/style/footer.css"
 const Footer = () => {
   return (
     <>
-      <footer className="libreria-footer">Este es el footer.</footer>
+      {/* <footer className="libreria-footer">Este es el footer.</footer> */}
     </>
   );
 };
