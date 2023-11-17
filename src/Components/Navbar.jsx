@@ -1,20 +1,20 @@
 import { NavLink } from "react-router-dom";
 import "../assets/style/navbar.css";
-import cartIcon from "../assets/style/icons/cartIcon";
-import profileIcon from "../assets/style/icons/profileIcon";
+import cartIcon from "../assets/icons/cartIcon";
+import profileIcon from "../assets/icons/profileIcon";
+import logoNavBar from "../assets/icons/logoNavBar";
 
 const Navbar = () => {
   const cartIconSvg = cartIcon();
   const profileIconSvg = profileIcon();
+  const logoNavBarSvg = logoNavBar();
 
   return (
     <>
       <nav className="navbar">
-        <img
-          className="libreria-navbar_logo"
-          src="../../public/img/CastrosLogo.jpg"
-          alt=""
-        />
+        <div className="libreria-navbar_logo">
+        {logoNavBarSvg}
+      </div>
         <ul className="nav-links">
           <li>
             <NavLink to="/">Home</NavLink>
