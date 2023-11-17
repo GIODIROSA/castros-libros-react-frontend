@@ -1,48 +1,34 @@
-// import React, { useContext } from 'react';
-// import { FavoritesContext } from '../context/FavoritesContext';
+import React from 'react';
+import { useFavoritesContext } from '../context/FavoritesContext';
 
-// const Favorites = () => {
-//   const { favorites } = useContext(FavoritesContext);
-
-//   return (
-//     <div className='mt-5'>
-//       <div className="container pt-5 mt-5 row justify-content-center">
-//         {favorites.length > 0 ? (
-//           favorites.map((libro) => (
-//             <div key={libro.id} className="card m-2 col-3">
-//               <div className="row g-0 justify-content-center">
-//                 <div className="col-md-20">
-//                   <img src={libro.url} className="img-thumbnail" alt={libro.description} style={{height:"400px", width:"300px"}}/>
-//                   <div className="card-body">
-//                     <h5 className="card-title">Autor: {libro.authors}</h5>
-//                     <p className="card-text">{libro.description}</p>
-//                     <i className="bi bi-heart-fill" style={{ fontSize: '24px', color: 'red' }}></i>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           ))
-//         ) : (
-//           <div className="text-center">
-//             <h1>No hay libros favoritos</h1>
-//             <i className="bi bi-heart-fill" style={{ fontSize: '48px', color: 'red' }}></i>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Favorites;
-
-import React from 'react'
-
+// Favorites: componente para mostrar los libros favoritos
 const Favorites = () => {
+  //obtenemos los libros favoritos y la función para actualizar el estado "producto_favorito" desde el contexto
+  const { books, favorites, handleToggleLike } = useFavoritesContext(); 
+
+  //favoriteBooks: array con los libros favoritos filtrados desde el estado books
+  const favoriteBooks = books.filter((book) => favorites.includes(book.id)); 
+
   return (
     <div>
-      <h2>Aquí van los favoritos</h2>
+      <h2>Favoritos</h2>
+      {favoriteBooks.map((book) => (
+        <div key={book.id}>
+          <img
+             src={`http://localhost:5000/uploads/${book.image}`} //verificar la ruta de la imagen del servidor
+             alt={book.name}
+          />
+          <h3>{book.name}</h3>
+          <p>{book.description}</p>
+          <p>Autores: {book.authors.join(', ')}</p>
+          <p>Precio: {book.price}</p>
+          <button onClick={() => handleToggleLike(book.id)}>
+            {book.producto_favorito ? '❤️' : '🤍'} 
+          </button>
+        </div>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default Favorites
+export default Favorites;
