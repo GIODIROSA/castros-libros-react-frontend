@@ -15,7 +15,8 @@ const BookDetail = () => {
   };
 
   return (
-    <div style={{display: "flex", justifyContent: "center"}}><div className="book-detail">
+    <div className="book-detail_container">
+      <div className="book-detail">
       <div className="book-image">
         <img src="../../public/img/09elCodigoDaVinci.jpg" alt="titulo genérico" />
       </div>

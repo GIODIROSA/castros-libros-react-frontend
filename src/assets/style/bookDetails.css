@@ -1,5 +1,7 @@
-
-
+.book-detail_container {
+  display: flex;
+  justify-content: center; 
+}
 .book-detail {
     width: 60%;
     display: flex;
@@ -84,3 +86,50 @@
     cursor: pointer;
     border-radius: 0.25em;
   }
+
+  @media (max-width: 768px) {
+    .book-detail {
+      width: 90%;
+      flex-direction: column;
+      align-items: center;
+      margin: 3% 2% 5% 2%; /* Ajustar los márgenes para dispositivos móviles */
+    }
+  
+    .book-image {
+      width: 80%; /* Cambiado de 35% */
+      margin-bottom: 1.5em;
+    }
+  
+    .book-info {
+      width: 80%; /* Cambiado de 60% */
+    }
+  
+    .book-title {
+      font-size: 1.2em; /* Reducción del tamaño de la fuente */
+    }
+  
+    .book-price {
+      font-size: 1em; /* Reducción del tamaño de la fuente */
+    }
+  
+    .book-description {
+      margin-bottom: 1em; /* Ajuste en el margen inferior */
+    }
+  
+    .quantity {
+      font-size: 1em; /* Reducción del tamaño de la fuente */
+    }
+  
+    .quantity-button {
+      padding: 0.25em 0.5em; /* Ajuste del padding */
+      margin: 0 0.25em;
+      font-size: 0.8em; /* Reducción del tamaño de la fuente */
+    }
+  
+    .add-to-cart,
+    .add-to-favorites {
+      padding: 0.5em 1em; /* Ajuste del padding */
+      font-size: 0.9em; /* Reducción del tamaño de la fuente */
+    }
+  }
+  
