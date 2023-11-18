@@ -22,7 +22,9 @@ export const FavoritesProvider = ({ children }) => {
   //fetchData: función para obtener la información de los libros desde el backend
   const fetchData = async () => { 
     try {
-      const response = await axios.get('http://localhost:5000/api/products'); //verificar la ruta del servidor
+      const userId = localStorage.getItem('userId') // Para asociar al usuario_id en las solicitudes al backend
+      // Considerar en backend: localStorage.setItem('userId', usuario.usuario_id.toString());
+      const response = await axios.get(`http://localhost:5000/api/books/${userId}`); //verificar la ruta del servidor
       setBooks(response.data); //almacenar los libros en el estado books
     } catch (error) {
       console.error('Error al obtener libros desde el backend', error);

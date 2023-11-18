@@ -10,19 +10,19 @@ const Favorites = () => {
   const favoriteBooks = books.filter((book) => favorites.includes(book.producto_id)); 
 
   return (
-    <div>
-      <h2>Favoritos</h2>
+    <div className='castros-favoritos-contenedor'>
+      <h2 className='castros-favoritos-titulo'>Favoritos</h2>
       {favoriteBooks.map((book) => (
         <div key={book.producto_id}>
-          <img
+          <img className='castros-favoritos-card-imagen'
              src={`http://localhost:5000/uploads/${book.producto_imagen}`} //verificar la ruta de la imagen del servidor
              alt={book.producto_nombre}
           />
-          <h3>{book.producto_nombre}</h3>
-          <p>{book.producto_descripcion}</p>
-          <p>Autores: {book.producto_autores}</p>
-          <p>Precio: {book.producto_precio}</p>
-          <button onClick={() => handleToggleLike(book.producto_id)}>
+          <h3 className='castros-favoritos-card-nombre'>{book.producto_nombre}</h3>
+          <p className='castros-favoritos-card-descripcion'>{book.producto_descripcion}</p>
+          <p className='castros-favoritos-card-autores'>Autores: {book.producto_autores}</p>
+          <p className='castros-favoritos-card-precio'>Precio: {book.producto_precio}</p>
+          <button className='castros-favoritos-card-boton'onClick={() => handleToggleLike(book.producto_id)}>
             {book.producto_favorito ? '❤️' : '🤍'} 
           </button>
         </div>
