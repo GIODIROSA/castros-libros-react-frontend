@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import CartIcon from '../assets/icons/cartIcon';
 
 const GalleryContainer = styled.div`
-  max-width: 800px;
+  max-width: 90%;
   margin: 0 auto;
 `;
 
 const ProductCard = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
+  padding: 2%;
+  margin: 2%;
   text-align: center;
-  flex: 1 0 21%; /* Establece el ancho para 4 elementos por fila */
-  
+  flex: 1 0 21%;
+
   @media (max-width: 767px) {
-    flex: 1 0 48%; /* Cambia el ancho para 2 elementos por fila en dispositivos móviles */
+    flex: 1 0 48%;
   }
 `;
 
@@ -26,18 +25,57 @@ const ProductImage = styled.img`
   border-radius: 4px;
 `;
 
-const Button = styled.button`
-  background-color: #3498db;
+const CartButton = styled.button`
+  background-color: #ece9e2;
   color: #fff;
-  padding: 8px 16px;
+  padding: 2% 4%;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 8px;
+  margin: 2%;
+`;
+
+const LikeButton = styled.button`
+  background-color: #5d573f;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 2% 4%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 2%;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+`;
+
+const PaginationButton = styled.button`
+  background-color: ${(props) => (props.currentPage ? '#5D573F' : 'transparent')};
+  color: ${(props) => (props.currentPage ? '#fff' : '')};
+  padding: 1% 2%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0;
+`;
+
+const ArrowButton = styled.button`
+  background-color: transparent;
+  padding: 1% 2%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 1%;
 `;
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]); //estado para la lista de productos
+  const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
+  const productsPerPage = 6; //cantidad de cards por página
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,21 +90,35 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  const indexOfLastProduct = currentPage * productsPerPage; //índice del último producto de la página
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage; //índice del primer producto de la página
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct); //lista de productos de la página actual
+
   const handleLike = (productId) => {
-    // Código para el botón me gusta
+    //aquí va la lógica para manejar el botón Me gusta
     console.log(`Me gusta el producto con ID ${productId}`);
   };
 
   const handleAddToCart = (productId) => {
-    // Código para el botón agregar al carrito
+    //aquí va la lógica para manejar el botón Agregar al Carrito
     console.log(`Agregado al carrito: Producto con ID ${productId}`);
   };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  //generación de lista de números de página
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <GalleryContainer>
       <h2>Galería de Productos</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {products.map((product) => (
+        {currentProducts.map((product) => (
           <ProductCard key={product.producto_id}>
             <ProductImage
               src={`http://localhost:3001/${product.producto_imagen}`}
@@ -76,15 +128,40 @@ const Products = () => {
             <p>{product.producto_descripcion}</p>
             <p>Autores: {product.producto_autores}</p>
             <p>Precio: {product.producto_precio}</p>
-            <Button onClick={() => handleLike(product.producto_id)}>
-              Me gusta
-            </Button>
-            <Button onClick={() => handleAddToCart(product.producto_id)}>
-              Agregar al Carrito
-            </Button>
+            <LikeButton onClick={() => handleLike(product.producto_id)}>
+              <span>♡</span> {/* Aquí va el ícono de corazón que tenemos que generar en carpeta icons*/}
+            </LikeButton>
+            <CartButton onClick={() => handleAddToCart(product.producto_id)}>
+              <CartIcon />
+            </CartButton>
           </ProductCard>
         ))}
       </div>
+      <PaginationContainer>
+        <ArrowButton
+          onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+        >
+          {'<'}
+        </ArrowButton>
+        {pageNumbers.map((number) => (
+          <PaginationButton
+            key={number}
+            onClick={() => paginate(number)}
+            currentPage={currentPage === number}
+          >
+            {number}
+          </PaginationButton>
+        ))}
+        <ArrowButton
+          onClick={() =>
+            setCurrentPage((prevPage) =>
+              Math.min(prevPage + 1, Math.ceil(products.length / productsPerPage))
+            )
+          }
+        >
+          {'>'}
+        </ArrowButton>
+      </PaginationContainer>
     </GalleryContainer>
   );
 };
