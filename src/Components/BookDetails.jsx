@@ -1,29 +1,10 @@
 import { useState } from "react";
 import ".././assets/style/bookDetails.css";
-import styled from "styled-components";
+import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
+
 
 const BookDetail = () => {
-  const Button = styled.button`
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'DM Sans', sans-serif;
-
-    @media (max-width: 768px) {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-
-    &:hover {
-      background-color: black;
-      color: white;
-    }
-  `;
+  
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = () => {
@@ -64,7 +45,7 @@ const BookDetail = () => {
                 +
               </button>
             </div>
-            <Button className= "libreria-castro__boton-agregar-carrito">Agregar al carrito</Button>
+            <ButtonAlCarrito className= "libreria-castro__boton-agregar-carrito">Agregar al carrito</ButtonAlCarrito>
           </div>
           <button className="add-to-favorites">Agregar a Favoritos</button>
         </div>
