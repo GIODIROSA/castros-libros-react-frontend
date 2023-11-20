@@ -1,77 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
-
-const ProductsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  width: 100%;
-  margin: 20px; /* Agregado espacio entre el contenedor y los bordes de la página */
+const GalleryContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
 `;
 
 const ProductCard = styled.div`
-  border: 1px solid #ddd;
-  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
   text-align: center;
-
-  img {
-    width: 100%;
-    height: auto;
+  flex: 1 0 21%; /* Establece el ancho para 4 elementos por fila */
+  
+  @media (max-width: 767px) {
+    flex: 1 0 48%; /* Cambia el ancho para 2 elementos por fila en dispositivos móviles */
   }
 `;
 
-const LikeButton = styled.button`
-  background: none;
+const ProductImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+`;
+
+const Button = styled.button`
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+  margin-top: 8px;
 `;
 
 const Products = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Producto 1', image: '09elCodigoDaVinci.jpg', liked: false },
-    { id: 2, name: 'Producto 2', image: '14laGenteOpina.jpg', liked: false },
-    { id: 3, name: 'Producto 3', image: '16elArca.jpg', liked: false },
-    { id: 4, name: 'Producto 4', image: '27elJardinSecreto.jpg', liked: false },
-    { id: 5, name: 'Producto 5', image: '32comoNoEscribi.jpg', liked: false },
-    { id: 6, name: 'Producto 6', image: '38dondeEstaWally.jpg', liked: false }, 
-  ]);
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/productos');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error al obtener la lista de productos:', error);
+      }
+    };
 
-  const handleAddToCart = (productId) => {
-    // Implementar lógica para agregar un producto al carrito
-    console.log(`Producto ${productId} agregado al carrito`);
+    fetchProducts();
+  }, []);
+
+  const handleLike = (productId) => {
+    // Código para el botón me gusta
+    console.log(`Me gusta el producto con ID ${productId}`);
   };
 
-  const handleToggleLike = (productId) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === productId ? { ...product, liked: !product.liked } : product
-      )
-    );
+  const handleAddToCart = (productId) => {
+    // Código para el botón agregar al carrito
+    console.log(`Agregado al carrito: Producto con ID ${productId}`);
   };
 
   return (
-    <div>
+    <GalleryContainer>
       <h2>Galería de Productos</h2>
-      <ProductsContainer>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {products.map((product) => (
-          <ProductCard key={product.id}>
-            <img src={`/img/${product.image}`} alt={product.name} />
-            <h3>{product.name}</h3>
-            <button onClick={() => handleAddToCart(product.id)}>Agregar al carrito</button>
-            <LikeButton onClick={() => handleToggleLike(product.id)}>
-              {product.liked ? '❤️' : '🤍'}
-              {product.liked ? 'Quitar de favoritos' : 'Agregar a favoritos'}
-            </LikeButton>
+          <ProductCard key={product.producto_id}>
+            <ProductImage
+              src={`http://localhost:3001/${product.producto_imagen}`}
+              alt={product.producto_nombre}
+            />
+            <h3>{product.producto_nombre}</h3>
+            <p>{product.producto_descripcion}</p>
+            <p>Autores: {product.producto_autores}</p>
+            <p>Precio: {product.producto_precio}</p>
+            <Button onClick={() => handleLike(product.producto_id)}>
+              Me gusta
+            </Button>
+            <Button onClick={() => handleAddToCart(product.producto_id)}>
+              Agregar al Carrito
+            </Button>
           </ProductCard>
         ))}
-      </ProductsContainer>
-    </div>
+      </div>
+    </GalleryContainer>
   );
 };
 
