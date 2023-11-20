@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
         element: <Favorites />,
       },
       {
-        path: "/login",
+        path: "/registro",
         element: <Login />,
       },
     ],

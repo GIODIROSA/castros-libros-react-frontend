@@ -27,7 +27,7 @@ const Navbar = () => {
             <NavLink to="/cart">{cartIconSvg}</NavLink>
           </li>
           <li>
-            <NavLink to="/login">{profileIconSvg}</NavLink>
+            <NavLink to="/registro">{profileIconSvg}</NavLink>
           </li>
           <li></li>
         </ul>
