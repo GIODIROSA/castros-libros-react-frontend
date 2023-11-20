@@ -1,0 +1,93 @@
+.container-login {
+    width:27%; 
+    background-color: #ffffff;
+    padding: 1em; 
+    margin-top: 1%;
+    margin-bottom: 1.7%;
+}
+
+.tabs-login {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10%; 
+}
+
+.tabs-login button {
+    padding: 0.625em 1.25em; 
+    border: solid 0.00625em #9c947399; 
+    border-radius: 0.3125em; 
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+}
+
+  
+  .tabs-login button.active {
+    background-color: #59543E; 
+    color: #ffffff; 
+  }
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-form,
+  .register-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-form label,
+  .register-form label {
+    margin-bottom: 3%;
+  }
+  
+  .login-form input,
+  .register-form input,
+  .login-button_action {
+    margin-bottom: 3%;
+    padding: 0.8em;
+    border-radius: 0.47em;
+    border: 0.1em solid #ccc;
+  }
+  
+  .login-button_action {
+    background-color: #5d573f; 
+    color: #ffffff; 
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 6%;
+  }
+
+
+  
+  .login-button_action:hover {
+    background-color: #9b9779 ; 
+  }
+
+  /* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    .container-login {
+      width: 80%; 
+    }
+  
+    .tabs-login {
+      flex-direction: column;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+  
+    .tabs-login button {
+      width: 50%;
+      margin-bottom: 1.2em;
+    }
+  
+    .login-form input,
+    .register-form input,
+    .login-button {
+      margin-bottom: 4%;
+    }
+  }

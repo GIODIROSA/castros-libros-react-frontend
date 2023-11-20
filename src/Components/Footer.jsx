@@ -13,13 +13,13 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="upper-footer">
-        <div className="container">
+        <div className="upper-footer_links">
           <NavLink to="/">Home</NavLink>
           <NavLink to="/favorites">Favoritos</NavLink>
         </div>
       </div>
       <div className="lower-footer">
-        <div className="container">
+        <div className="social-container">
           <p>Todos los derechos reservados 2023</p>
           <div className="social-icons">
             <a href="#">{linkedinFooterSvg}</a>

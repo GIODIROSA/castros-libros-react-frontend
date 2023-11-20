@@ -1,11 +1,11 @@
-import React from 'react'
+import FormLogin from "../Components/FormLogin";
 
 const Login = () => {
   return (
-    <div>
-      <h2>Aquí va el login</h2>
+    <div style={{display: "flex", justifyContent: "center"}}>
+      <FormLogin />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
