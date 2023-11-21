@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ".././assets/style/bookDetails.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
-
+import { LibrosContext } from "../context/LibrosContext";
 
 const BookDetail = () => {
-  
+  const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
+  const { libroSeleccionado } = valoresContextoLibros;
+
+const {producto_nombre, producto_precio, producto_descripcion, producto_imagen} = libroSeleccionado; 
+
+// función para quitar un / del la ruta
+function corregirRuta(ruta) {
+  return ruta.replace(/\/\//g, '/');
+}
+
+const rutaCorregida = corregirRuta(producto_imagen);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -22,18 +32,15 @@ const BookDetail = () => {
       <div className="book-detail">
         <div className="book-image">
           <img
-            src="../../public/img/09elCodigoDaVinci.jpg"
-            alt="titulo genérico"
+            src={rutaCorregida}
+            alt={producto_nombre}
           />
         </div>
         <div className="book-info">
-          <h2 className="book-title">Título genérico</h2>
-          <p className="book-price">Price: $999999</p>
+          <h2 className="book-title">{producto_nombre}</h2>
+          <p className="book-price">Precio: ${producto_precio}</p>
           <p className="book-description">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum
-            ratione vero doloremque quo id temporibus, optio in vel quia modi?
-            Impedit, eaque optio suscipit eveniet animi deserunt quia nihil
-            nostrum!
+           {producto_descripcion}
           </p>
           <div className="quantity-container">
             <div className="quantity-buttons">
@@ -45,7 +52,9 @@ const BookDetail = () => {
                 +
               </button>
             </div>
-            <ButtonAlCarrito className= "libreria-castro__boton-agregar-carrito">Agregar al carrito</ButtonAlCarrito>
+            <ButtonAlCarrito className="libreria-castro__boton-agregar-carrito">
+              Agregar al carrito
+            </ButtonAlCarrito>
           </div>
           <button className="add-to-favorites">Agregar a Favoritos</button>
         </div>
@@ -54,4 +63,4 @@ const BookDetail = () => {
   );
 };
 
-export default BookDetail;
+export default BookDetail; 

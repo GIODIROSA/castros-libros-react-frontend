@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import CartIcon from '../assets/icons/cartIcon';
+import { useNavigate } from 'react-router-dom';
+import { LibrosContext } from '../context/LibrosContext';
 
 const GalleryContainer = styled.div`
   max-width: 90%;
@@ -73,9 +75,12 @@ const ArrowButton = styled.button`
 `;
 
 const Products = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]); //estado para la lista de productos
   const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
   const productsPerPage = 6; //cantidad de cards por página
+  const { valoresContextoLibros } = useContext(LibrosContext);
+  const { setLibroSeleccionado } = valoresContextoLibros;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -89,6 +94,8 @@ const Products = () => {
 
     fetchProducts();
   }, []);
+
+
 
   const indexOfLastProduct = currentPage * productsPerPage; //índice del último producto de la página
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage; //índice del primer producto de la página
@@ -114,6 +121,13 @@ const Products = () => {
     pageNumbers.push(i);
   }
 
+  
+  // Función para guardar el libro seleccionado e ir la ruta del mismo
+  const verDetalles = (detalles) => {
+    setLibroSeleccionado(detalles);
+    navigate(`/productos/${detalles.producto_id}`);
+  };
+
   return (
     <GalleryContainer>
       <h2>Galería de Productos</h2>
@@ -124,7 +138,7 @@ const Products = () => {
               src={`http://localhost:3001/${product.producto_imagen}`}
               alt={product.producto_nombre}
             />
-            <h3>{product.producto_nombre}</h3>
+            <h3 onClick={(e) => verDetalles(product)}>{product.producto_nombre}</h3>
             <p>{product.producto_descripcion}</p>
             <p>Autores: {product.producto_autores}</p>
             <p>Precio: {product.producto_precio}</p>

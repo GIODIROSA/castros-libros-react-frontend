@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Cart from "../pages/Cart";
 import Favorites from "../pages/Favorites";
 import Login from "../pages/Login";
+import VerDetalle from "../pages/VerDetalle";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/registro",
         element: <Login />,
+      },
+      {
+        path: "/productos/:id",
+        element: <VerDetalle />,
       },
     ],
   },

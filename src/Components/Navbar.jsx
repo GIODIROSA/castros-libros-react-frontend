@@ -13,7 +13,7 @@ const Navbar = () => {
     <>
       <nav className="libreria-navbar">
         <div className="libreria-navbar_container-logo">
-        {logoNavBarSvg}
+        <NavLink to="/">{logoNavBarSvg}</NavLink>
       </div>
         <ul className="libreria-navbar_nav-links">
           <li>
