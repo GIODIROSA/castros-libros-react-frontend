@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="upper-footer">
         <div className="upper-footer_links">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/favorites">Favoritos</NavLink>
+         {/*  <NavLink to="/favorites">Favoritos</NavLink> */}
         </div>
       </div>
       <div className="lower-footer">

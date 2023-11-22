@@ -82,6 +82,7 @@ const Products = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { setLibroSeleccionado } = valoresContextoLibros;
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -138,7 +139,7 @@ const Products = () => {
               src={`http://localhost:3001/${product.producto_imagen}`}
               alt={product.producto_nombre}
             />
-            <h3 onClick={(e) => verDetalles(product)}>{product.producto_nombre}</h3>
+            <h3 onClick={() => verDetalles(product)}>{product.producto_nombre}</h3>
             <p>{product.producto_descripcion}</p>
             <p>Autores: {product.producto_autores}</p>
             <p>Precio: {product.producto_precio}</p>
@@ -161,7 +162,7 @@ const Products = () => {
           <PaginationButton
             key={number}
             onClick={() => paginate(number)}
-            currentPage={currentPage === number}
+          /*   currentPage={currentPage === number} */
           >
             {number}
           </PaginationButton>
