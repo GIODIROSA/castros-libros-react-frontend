@@ -2,24 +2,33 @@ import { useContext, useEffect, useState } from "react";
 import ".././assets/style/bookDetails.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import { LibrosContext } from "../context/LibrosContext";
+import { useNavigate } from "react-router-dom";
 
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
   const { libroSeleccionado } = valoresContextoLibros;
+  const navigate = useNavigate();
 
-const {producto_nombre, producto_precio, producto_descripcion, producto_imagen} = libroSeleccionado; 
+  const {
+    producto_nombre,
+    producto_precio,
+    producto_descripcion,
+    producto_imagen,
+    producto_autores,
+  } = libroSeleccionado;
 
-// función para quitar un / del la ruta (posiblemente se elimine)
-function corregirRuta(ruta) {
-  return ruta.replace(/\/\//g, '/');
-}
+  useEffect(() => {
+    if (!libroSeleccionado) {
+      navigate("/");
+    }
+  }, [libroSeleccionado]);
 
-const rutaCorregida = corregirRuta(producto_imagen);
+  // función para quitar un / del la ruta (posiblemente se elimine)
 
-useEffect(() => {
-  window.scrollTo(0, 0);
-}, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -35,17 +44,13 @@ useEffect(() => {
     <div className="book-detail_container">
       <div className="book-detail">
         <div className="book-image">
-          <img
-            src={rutaCorregida}
-            alt={producto_nombre}
-          />
+          <img src={""} alt={producto_nombre} />
         </div>
         <div className="book-info">
           <h2 className="book-title">{producto_nombre}</h2>
+          <p> <b>Autor:</b> {producto_autores} </p>
           <p className="book-price">Precio: ${producto_precio}</p>
-          <p className="book-description">
-           {producto_descripcion}
-          </p>
+          <p className="book-description">{producto_descripcion}</p>
           <div className="quantity-container">
             <div className="quantity-buttons">
               <button className="quantity-button" onClick={handleDecrement}>
@@ -67,4 +72,4 @@ useEffect(() => {
   );
 };
 
-export default BookDetail; 
+export default BookDetail;

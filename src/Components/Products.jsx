@@ -139,7 +139,7 @@ const Products = () => {
         src={`http://localhost:3001/${producto_imagen}`}
         alt={producto_nombre}
       />
-      <h3 onClick={(e) => verDetalles({ producto_id, producto_nombre })}>{producto_nombre}</h3>
+      <h3 onClick={() => verDetalles({ producto_id, producto_imagen, producto_nombre, producto_descripcion, producto_autores, producto_precio })}>{producto_nombre}</h3>
       <p>{producto_descripcion}</p>
       <p>Autores: {producto_autores}</p>
       <p>Precio: {producto_precio}</p>
