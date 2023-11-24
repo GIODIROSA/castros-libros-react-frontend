@@ -6,18 +6,45 @@ const FormLogin = () => {
   const [activeTab, setActiveTab] = useState("login");
   const [usuario, setUsuario] = useState({});
 
-  const registrarUsuario = async () => {
-    const urlServer = "http://localhost:3001";
-    const endpoint = "/usuarios";
+  const apiBaseUrl = "http://localhost:3001";
 
+  const registrarUsuario = async () => {
     try {
-      await axios.post(urlServer + endpoint, usuario);
-      alert("Usuario registrado con éxito");
+      const respuesta = await axios.post(`${apiBaseUrl}/usuarios`, usuario);
+      console.log("resp", respuesta);
+      alert("Usuario registrado")
     } catch (error) {
-      alert("Algo salió mal ...");
-      console.log(error);
+      console.error(error);
+ 
     }
   };
+
+  /* 
+
+const registrarUsuario = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch(`${apiBaseUrl}/usuarios`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(usuario)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log("resp", responseData);
+    // Aquí puedes mostrar un mensaje de éxito en la UI
+  } catch (error) {
+    console.error(error);
+    // Aquí podrías mostrar un mensaje de error en la UI
+  }
+}; */
 
   const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {};

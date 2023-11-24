@@ -18,8 +18,6 @@ export const LibrosProvider = ({ children }) => {
     };
 
     fetchProducts();
-
-    console.log("productos", productos);
   }, []);
 
   const valoresContextoLibros = {

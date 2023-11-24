@@ -82,6 +82,7 @@ const Products = () => {
   const { valoresContextoLibros } = useContext(LibrosContext); 
   const { setLibroSeleccionado } = valoresContextoLibros;
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -132,26 +133,25 @@ const Products = () => {
     <GalleryContainer>
       <h2>Galería de Productos</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-  {currentProducts.map(({ producto_id, producto_imagen, producto_nombre, producto_descripcion, producto_autores, producto_precio }) => (
-    console.log(producto_imagen),
-    <ProductCard key={producto_id}>
-      <ProductImage
-        src={`http://localhost:3001/${producto_imagen}`}
-        alt={producto_nombre}
-      />
-      <h3 onClick={(e) => verDetalles({ producto_id, producto_nombre })}>{producto_nombre}</h3>
-      <p>{producto_descripcion}</p>
-      <p>Autores: {producto_autores}</p>
-      <p>Precio: {producto_precio}</p>
-      <LikeButton onClick={() => handleLike(producto_id)}>
-        <span>♡</span>
-      </LikeButton>
-      <CartButton onClick={() => handleAddToCart(producto_id)}>
-        <CartIcon />
-      </CartButton>
-    </ProductCard>
-  ))}
-</div>
+        {currentProducts.map((product) => (
+          <ProductCard key={product.producto_id}>
+            <ProductImage
+              src={`http://localhost:3001/${product.producto_imagen}`}
+              alt={product.producto_nombre}
+            />
+            <h3 onClick={() => verDetalles(product)}>{product.producto_nombre}</h3>
+            <p>{product.producto_descripcion}</p>
+            <p>Autores: {product.producto_autores}</p>
+            <p>Precio: {product.producto_precio}</p>
+            <LikeButton onClick={() => handleLike(product.producto_id)}>
+              <span>♡</span> {/* Aquí va el ícono de corazón que tenemos que generar en carpeta icons*/}
+            </LikeButton>
+            <CartButton onClick={() => handleAddToCart(product.producto_id)}>
+              <CartIcon />
+            </CartButton>
+          </ProductCard>
+        ))}
+      </div>
       <PaginationContainer>
         <ArrowButton
           onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
@@ -162,7 +162,7 @@ const Products = () => {
           <PaginationButton
             key={number}
             onClick={() => paginate(number)}
-            currentPage={currentPage === number}
+          /*   currentPage={currentPage === number} */
           >
             {number}
           </PaginationButton>

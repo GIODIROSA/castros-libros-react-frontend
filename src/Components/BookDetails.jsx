@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ".././assets/style/bookDetails.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import { LibrosContext } from "../context/LibrosContext";
@@ -10,12 +10,16 @@ const BookDetail = () => {
 
 const {producto_nombre, producto_precio, producto_descripcion, producto_imagen} = libroSeleccionado; 
 
-// función para quitar un / del la ruta
+// función para quitar un / del la ruta (posiblemente se elimine)
 function corregirRuta(ruta) {
   return ruta.replace(/\/\//g, '/');
 }
 
 const rutaCorregida = corregirRuta(producto_imagen);
+
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
