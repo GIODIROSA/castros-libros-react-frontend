@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
-import CartIcon from '../assets/icons/cartIcon';
-import { useNavigate } from 'react-router-dom';
-import { LibrosContext } from '../context/LibrosContext';
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import CartIcon from "../assets/icons/cartIcon";
+import { useNavigate } from "react-router-dom";
+import { LibrosContext } from "../context/LibrosContext";
 
 const GalleryContainer = styled.div`
   max-width: 90%;
@@ -56,8 +56,9 @@ const PaginationContainer = styled.div`
 `;
 
 const PaginationButton = styled.button`
-  background-color: ${(props) => (props.currentPage ? '#5D573F' : 'transparent')};
-  color: ${(props) => (props.currentPage ? '#fff' : '')};
+  background-color: ${(props) =>
+    props.currentPage ? "#5D573F" : "transparent"};
+  color: ${(props) => (props.currentPage ? "#fff" : "")};
   padding: 1% 2%;
   border: none;
   border-radius: 4px;
@@ -79,28 +80,28 @@ const Products = () => {
   const [products, setProducts] = useState([]); //estado para la lista de productos
   const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
   const productsPerPage = 6; //cantidad de cards por página
-  const { valoresContextoLibros } = useContext(LibrosContext); 
+  const { valoresContextoLibros } = useContext(LibrosContext);
   const { setLibroSeleccionado } = valoresContextoLibros;
-
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/productos');
+        const response = await axios.get("http://localhost:3001/productos?limits=20");
         setProducts(response.data);
       } catch (error) {
-        console.error('Error al obtener la lista de productos:', error);
+        console.error("Error al obtener la lista de productos:", error);
       }
     };
 
     fetchProducts();
   }, []);
 
-
-
   const indexOfLastProduct = currentPage * productsPerPage; //índice del último producto de la página
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage; //índice del primer producto de la página
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct); //lista de productos de la página actual
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  ); //lista de productos de la página actual
 
   const handleLike = (productId) => {
     //aquí va la lógica para manejar el botón Me gusta
@@ -122,47 +123,72 @@ const Products = () => {
     pageNumbers.push(i);
   }
 
-  
   // Función para guardar el libro seleccionado e ir la ruta del mismo
   const verDetalles = (detalles) => {
     setLibroSeleccionado(detalles);
+
     navigate(`/productos/${detalles.producto_id}`);
   };
 
   return (
     <GalleryContainer>
       <h2>Galería de Productos</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-  {currentProducts.map(({ producto_id, producto_imagen, producto_nombre, producto_descripcion, producto_autores, producto_precio }) => (
-    <ProductCard key={producto_id}>
-      <ProductImage
-        src={`http://localhost:3001/${producto_imagen}`}
-        alt={producto_nombre}
-      />
-      <h3 onClick={() => verDetalles({ producto_id, producto_imagen, producto_nombre, producto_descripcion, producto_autores, producto_precio })}>{producto_nombre}</h3>
-      <p>{producto_descripcion}</p>
-      <p>Autores: {producto_autores}</p>
-      <p>Precio: {producto_precio}</p>
-      <LikeButton onClick={() => handleLike(producto_id)}>
-        <span>♡</span>
-      </LikeButton>
-      <CartButton onClick={() => handleAddToCart(producto_id)}>
-        <CartIcon />
-      </CartButton>
-    </ProductCard>
-  ))}
-</div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {currentProducts.map(
+          ({
+            producto_id,
+            producto_imagen,
+            producto_nombre,
+            producto_descripcion,
+            producto_autores,
+            producto_precio,
+          }) => (
+            <ProductCard key={producto_id}>
+              <div
+                onClick={() =>
+                  verDetalles({
+                    producto_id,
+                    producto_imagen,
+                    producto_nombre,
+                    producto_descripcion,
+                    producto_autores,
+                    producto_precio,
+                  })
+                }
+                style={{ cursor: "pointer" }}
+              >
+                <ProductImage
+                  src={`http://localhost:3001/${producto_imagen}`}
+                  alt={producto_nombre}
+                />
+                <h3>{producto_nombre}</h3>
+              </div>{" "}
+              <p>{producto_descripcion}</p>
+              <p>Autores: {producto_autores}</p>
+              <p>Precio: {producto_precio}</p>
+              <LikeButton onClick={() => handleLike(producto_id)}>
+                <span>♡</span>
+              </LikeButton>
+              <CartButton onClick={() => handleAddToCart(producto_id)}>
+                <CartIcon />
+              </CartButton>
+            </ProductCard>
+          )
+        )}
+      </div>
       <PaginationContainer>
         <ArrowButton
-          onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+          onClick={() =>
+            setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
+          }
         >
-          {'<'}
+          {"<"}
         </ArrowButton>
         {pageNumbers.map((number) => (
           <PaginationButton
             key={number}
             onClick={() => paginate(number)}
-          /*   currentPage={currentPage === number} */
+            /*   currentPage={currentPage === number} */
           >
             {number}
           </PaginationButton>
@@ -170,11 +196,14 @@ const Products = () => {
         <ArrowButton
           onClick={() =>
             setCurrentPage((prevPage) =>
-              Math.min(prevPage + 1, Math.ceil(products.length / productsPerPage))
+              Math.min(
+                prevPage + 1,
+                Math.ceil(products.length / productsPerPage)
+              )
             )
           }
         >
-          {'>'}
+          {">"}
         </ArrowButton>
       </PaginationContainer>
     </GalleryContainer>

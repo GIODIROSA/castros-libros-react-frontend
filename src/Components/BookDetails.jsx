@@ -18,13 +18,12 @@ const BookDetail = () => {
     producto_autores,
   } = libroSeleccionado;
 
-  useEffect(() => {
+   useEffect(() => {
     if (!libroSeleccionado) {
       navigate("/");
     }
-  }, [libroSeleccionado]);
+  }, [libroSeleccionado]); 
 
-  // función para quitar un / del la ruta (posiblemente se elimine)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,7 +43,7 @@ const BookDetail = () => {
     <div className="book-detail_container">
       <div className="book-detail">
         <div className="book-image">
-          <img src={""} alt={producto_nombre} />
+          <img src={`http://localhost:3001/${producto_imagen}`} alt={producto_nombre} />
         </div>
         <div className="book-info">
           <h2 className="book-title">{producto_nombre}</h2>
