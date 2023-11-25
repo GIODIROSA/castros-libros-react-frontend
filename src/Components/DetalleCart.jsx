@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../assets/style/detalleCart.css";
 
 const DetalleCart = () => {
+
+
   const [products, setProducts] = useState([
     { id: 1, name: "Product 1", price: 10, quantity: 1 },
     { id: 2, name: "Product 2", price: 15, quantity: 2 },

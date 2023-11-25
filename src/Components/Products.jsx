@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
+import { CarritoProvider, useCarrito } from "../context/CarritoContext";
 
 const GalleryContainer = styled.div`
   max-width: 90%;
@@ -81,6 +82,9 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
   const productsPerPage = 6; //cantidad de cards por página
   const { valoresContextoLibros } = useContext(LibrosContext);
+  const { agregarAlCarrito } = useCarrito();
+
+
   const { setLibroSeleccionado } = valoresContextoLibros;
 
   useEffect(() => {
@@ -108,10 +112,17 @@ const Products = () => {
     console.log(`Me gusta el producto con ID ${productId}`);
   };
 
-  const handleAddToCart = (productId) => {
-    //aquí va la lógica para manejar el botón Agregar al Carrito
-    console.log(`Agregado al carrito: Producto con ID ${productId}`);
+
+  //agregar producto al carrito
+  const handleAddToCart = (productoId) => {
+    try {
+      agregarAlCarrito(productoId);
+      console.log(`Agregado al carrito: ${productoId}`);
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+    }
   };
+
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -130,7 +141,9 @@ const Products = () => {
     navigate(`/productos/${detalles.producto_id}`);
   };
 
+
   return (
+    <CarritoProvider>
     <GalleryContainer>
       <h2>Galería de Productos</h2>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -207,6 +220,7 @@ const Products = () => {
         </ArrowButton>
       </PaginationContainer>
     </GalleryContainer>
+    </CarritoProvider>
   );
 };
 
