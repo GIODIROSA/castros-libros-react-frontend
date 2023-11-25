@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../assets/style/formLogin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BookManager from "../pages/BookManager";
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -192,7 +193,7 @@ const FormLogin = () => {
             <button className="login-button_action">REGISTRARSE</button>
           </form>
         )}
-      </div>
+      </div>{" "}
     </div>
   );
 };

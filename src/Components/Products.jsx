@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import CartIcon from "../assets/icons/cartIcon";

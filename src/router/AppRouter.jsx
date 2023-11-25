@@ -11,6 +11,7 @@ import Favorites from "../pages/Favorites";
 import Login from "../pages/Login";
 import VerDetalle from "../pages/VerDetalle";
 import Profile from "../pages/Profile";
+import BookManager from "../pages/BookManager";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "/perfil",
         element: <Profile />,
+      },
+      {
+        path: "/manager",
+        element: <BookManager />,
       },
     ],
   },
