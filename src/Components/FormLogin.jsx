@@ -1,55 +1,104 @@
 import { useState } from "react";
 import "../assets/style/formLogin.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("login");
-  const [usuario, setUsuario] = useState({});
+  const [usuario, setUsuario] = useState({
+    nombre: "",
+    apellido: "",
+    direccion: "",
+    email: "",
+    password: "",
+  });
 
-  const apiBaseUrl = "http://localhost:3001";
-
-  const registrarUsuario = async () => {
+  //función que llama a la API del login
+  const handleLogin = async (email, password) => {
     try {
-      const respuesta = await axios.post(`${apiBaseUrl}/usuarios`, usuario);
-      console.log("resp", respuesta);
-      alert("Usuario registrado")
+      const token = await axios.post("http://localhost:3001/login", {
+        email,
+        password,
+      });
+      console.log("Respuesta del servidor:", token.data);
+      alert("Inicio de sesión exitoso");
+      localStorage.setItem("token", token.data);
+      setUsuario({
+        nombre: "",
+        apellido: "",
+        direccion: "",
+        email: "",
+        password: "",
+      });
     } catch (error) {
-      console.error(error);
- 
+      console.error("Error al iniciar sesión:", error);
+    }
+
+    const getUsuarioData = async () => {
+      const urlServer = "http://localhost:3001";
+      const endpoint = "/usuarios";
+      const token = localStorage.getItem("token");
+      console.log(token);
+      try {
+        const { data } = await axios.get(urlServer + endpoint, {
+          headers: { Authorization: "Bearer " + token },
+        });
+        /*  setUsuarioGlobal(data); */
+        setUsuario(data);
+      } catch ({ response: { data: message } }) {
+        alert(message + " 🙁");
+        console.log(message);
+      }
+    };
+
+    getUsuarioData();
+  };
+
+  //función que llama a la API del registro
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (activeTab === "register") {
+        const response = await axios.post(
+          "http://localhost:3001/usuarios",
+          usuario
+        );
+        console.log("Respuesta del servidor:", response.data);
+        alert("Usuario registrado con éxito");
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
     }
   };
 
-  /* 
-
-const registrarUsuario = async (e) => {
-  e.preventDefault();
-
-  try {
-    const response = await fetch(`${apiBaseUrl}/usuarios`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(usuario)
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`);
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = usuario;
+    if ((email && password) || email != "" || password != "") {
+      await handleLogin(email, password);
+      setUsuario({
+        nombre: "",
+        apellido: "",
+        direccion: "",
+        email: "",
+        password: "",
+      });
+    } else {
+      alert("Email y contraseña son requeridos");
     }
+  };
 
-    const responseData = await response.json();
-    console.log("resp", responseData);
-    // Aquí puedes mostrar un mensaje de éxito en la UI
-  } catch (error) {
-    console.error(error);
-    // Aquí podrías mostrar un mensaje de error en la UI
-  }
-}; */
-
-  const handleSetUsuario = ({ target: { value, name } }) => {
-    const field = {};
-    field[name] = value;
-    setUsuario({ ...usuario, ...field });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUsuario({
+      ...usuario,
+      [name]: value,
+    });
+    console.log("usuario", usuario);
   };
 
   const handleTabChange = (tab) => {
@@ -74,59 +123,73 @@ const registrarUsuario = async (e) => {
       </div>
       <div className="login-container">
         {activeTab === "login" && (
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleLoginSubmit}>
             <label>Email</label>
-            <input type="email" placeholder="Ingresa tu email" />
+            <input
+              type="email"
+              placeholder="Ingresa tu email"
+              value={usuario.email}
+              onChange={(e) =>
+                setUsuario({ ...usuario, email: e.target.value })
+              }
+            />
             <label>Contraseña</label>
-            <input type="password" placeholder="Contraseña" />
-            <button className="login-button_action">INGRESAR</button>
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={usuario.password}
+              onChange={(e) =>
+                setUsuario({ ...usuario, password: e.target.value })
+              }
+            />
+            <button type="submit" className="login-button_action">
+              INGRESAR
+            </button>
           </form>
         )}
         {activeTab === "register" && (
-          <form className="register-form">
+          <form className="register-form" onSubmit={handleSubmit}>
             <label>Nombre</label>
             <input
-              type="nombre"
+              type="text"
               name="nombre"
               placeholder="Ingresa tu Nombre"
-              value={usuario.nombre || ""}
-              onChange={handleSetUsuario}
+              value={usuario.nombre}
+              onChange={handleInputChange}
             />
             <label>Apellido</label>
             <input
-              type="apellido"
+              type="text"
               name="apellido"
               placeholder="Ingresa tu Apellido"
-              value={usuario.apellido || ""}
-              onChange={handleSetUsuario}
+              value={usuario.apellido}
+              onChange={handleInputChange}
             />
             <label>Dirección</label>
             <input
-              type="direccion"
+              type="text"
               name="direccion"
               placeholder="Ingresa tu Dirección"
-              value={usuario.direccion || ""}
-              onChange={handleSetUsuario}
+              value={usuario.direccion}
+              onChange={handleInputChange}
             />
             <label>Email</label>
             <input
               type="email"
               name="email"
               placeholder="Ingresa tu Email"
-              value={usuario.email || ""}
-              onChange={handleSetUsuario}
+              value={usuario.email}
+              onChange={handleInputChange}
             />
             <label>Contraseña</label>
             <input
               type="password"
               name="password"
               placeholder="Contraseña"
-              value={usuario.password || ""}
-              onChange={handleSetUsuario}
+              value={usuario.password}
+              onChange={handleInputChange}
             />
-            <button className="login-button_action" onClick={registrarUsuario}>
-              REGISTRARSE
-            </button>
+            <button className="login-button_action">REGISTRARSE</button>
           </form>
         )}
       </div>

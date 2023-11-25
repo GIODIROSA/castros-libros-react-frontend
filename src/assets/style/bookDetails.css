@@ -18,11 +18,13 @@
   
   .book-image {
     width: 40%;
+    max-height: 100%;
   }
   
   .book-image img {
     max-width: 90%;
     height: auto;
+    max-height: 100%;
     border-radius: 0.5em;
   }
   
