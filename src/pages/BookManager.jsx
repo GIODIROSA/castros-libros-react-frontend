@@ -57,11 +57,12 @@ const BookManager = () => {
         />
         <label>Imagen</label>
         <input
-          type="text"
+          type="file"
           name="image"
           placeholder="Imagen"
           value={bookData.image}
           onChange={handleInputChange}
+          accept="image.jpg, image.jpeg, image.png"
         />
         <label>Categoría</label>
         <input
