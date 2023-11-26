@@ -6,6 +6,30 @@ export const LibrosContext = createContext();
 export const LibrosProvider = ({ children }) => {
   const [productos, setProductos] = useState("");
   const [libroSeleccionado, setLibroSeleccionado] = useState("");
+  const [productoSeleccionado, setProductoSeleccionado] = useState("");
+  const [carrito, setCarrito] = useState([]);
+
+  const incrementarProducto = (producto) => {
+    setCarrito(
+      carrito.map((item) =>
+        item.producto_id === producto.producto_id
+          ? { ...item, cantidad: item.cantidad + 1 }
+          : item
+      )
+    );
+  };
+
+  const decrementarProducto = (producto) => {
+    setCarrito(
+      carrito.map((item) =>
+        item.producto_id === producto.producto_id
+          ? { ...item, cantidad: Math.max(0, item.cantidad - 1) }
+          : item
+      )
+    );
+  };
+
+ 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,13 +44,18 @@ export const LibrosProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
+
   const valoresContextoLibros = {
     productos,
     libroSeleccionado,
     setLibroSeleccionado,
-  };
-
-  console.log("productos", productos);
+    productoSeleccionado,
+    setProductoSeleccionado,
+    carrito,
+    setCarrito,
+    incrementarProducto,
+    decrementarProducto,
+    };
 
   return (
     <LibrosContext.Provider value={{ valoresContextoLibros }}>

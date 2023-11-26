@@ -4,7 +4,6 @@ import styled from "styled-components";
 import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
-import { CarritoProvider, useCarrito } from "../context/CarritoContext";
 
 const GalleryContainer = styled.div`
   max-width: 90%;
@@ -82,16 +81,18 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
   const productsPerPage = 6; //cantidad de cards por página
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const { agregarAlCarrito } = useCarrito();
-
-
-  const { setLibroSeleccionado } = valoresContextoLibros;
+  const { setLibroSeleccionado, setProductoSeleccionado, productoSeleccionado, setCarrito, carrito } = valoresContextoLibros;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:3001/productos?limits=20");
-        setProducts(response.data);
+        const productosConNumeros = response.data.map(producto => ({// Convierte string precios a números
+          ...producto,
+          producto_precio: parseFloat(producto.producto_precio),
+        }));
+
+        setProducts(productosConNumeros);
       } catch (error) {
         console.error("Error al obtener la lista de productos:", error);
       }
@@ -113,17 +114,6 @@ const Products = () => {
   };
 
 
-  //agregar producto al carrito
-  const handleAddToCart = (productoId) => {
-    try {
-      agregarAlCarrito(productoId);
-      console.log(`Agregado al carrito: ${productoId}`);
-    } catch (error) {
-      console.error("Error al agregar al carrito:", error);
-    }
-  };
-
-
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -141,9 +131,15 @@ const Products = () => {
     navigate(`/productos/${detalles.producto_id}`);
   };
 
+  const agregarAlCarrito = (detalles) => {
+    setProductoSeleccionado(detalles);
+    setCarrito([...carrito, { ...productoSeleccionado}]);
+    console.log(productoSeleccionado);
+    console.log(carrito);
+  };
+
 
   return (
-    <CarritoProvider>
     <GalleryContainer>
       <h2>Galería de Productos</h2>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -182,7 +178,14 @@ const Products = () => {
               <LikeButton onClick={() => handleLike(producto_id)}>
                 <span>♡</span>
               </LikeButton>
-              <CartButton onClick={() => handleAddToCart(producto_id)}>
+              <CartButton onClick={() => agregarAlCarrito({
+                producto_id,
+                producto_imagen,
+                producto_nombre,
+                producto_descripcion,
+                producto_autores,
+                producto_precio,
+              })}>
                 <CartIcon />
               </CartButton>
             </ProductCard>
@@ -201,7 +204,7 @@ const Products = () => {
           <PaginationButton
             key={number}
             onClick={() => paginate(number)}
-            /*   currentPage={currentPage === number} */
+          /*   currentPage={currentPage === number} */
           >
             {number}
           </PaginationButton>
@@ -220,7 +223,6 @@ const Products = () => {
         </ArrowButton>
       </PaginationContainer>
     </GalleryContainer>
-    </CarritoProvider>
   );
 };
 
