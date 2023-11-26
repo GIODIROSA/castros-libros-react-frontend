@@ -4,6 +4,8 @@ import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
 import "../assets/style/products.css";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const Products = () => {
   const navigate = useNavigate();
@@ -55,8 +57,14 @@ const Products = () => {
 
   const agregarAlCarrito = (detalles) => {
     setCarrito([...carrito, { ...detalles }]);
-    console.log(detalles);
-    console.log(carrito);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Producto agregado!',
+      text: `Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`,
+      customClass: {
+        confirmButton:'#8B4513',
+      },
+    });
   };
 
   return (
