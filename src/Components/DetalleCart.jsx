@@ -6,7 +6,29 @@ const DetalleCart = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { carrito, incrementarProducto, decrementarProducto, totalCarrito } = valoresContextoLibros;
 
- 
+  // const [carritoData, setCarritoData] = useState([inicial]);
+
+  // const inicial = {
+  // {
+  //   "pedido_fecha": "2023-11-22T12:00:00Z", 
+  //   "usuario_id": 2, 
+  //   "pedido_estado": 1, 
+  //   "detalle_pedido": [
+  //     {
+  //       "detalle_cantidad": 3, 
+  //       "detalle_precio": 12000, 
+  //       "producto_id": 2 
+  //     },
+  //     {
+  //       "detalle_cantidad": 2,
+  //       "detalle_precio": 12000,
+  //       "producto_id": 3 
+  //     }
+  //   ]
+  // }
+
+  //  const handlePagar = setCarritoData({}) incluir petición post;
+
   const carritoFiltrado = carrito.filter((item) => item.cantidad > 0); // Filtra el carrito para excluir productos con cantidad cero
 
   return (
@@ -39,7 +61,9 @@ const DetalleCart = () => {
               <p>Total: ${totalCarrito}</p>
             </div>
             <div className="detalle-cart_container_button-pagar">
-              <button className="detalle-cart_button-pagar">Pagar</button>
+              <button
+                //onClick={handlePagar} 
+                className="detalle-cart_button-pagar">Pagar</button>
             </div>
           </div>
         </div>

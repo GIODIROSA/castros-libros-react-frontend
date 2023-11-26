@@ -1,11 +1,12 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import axios from "axios";
+
 export const LibrosContext = createContext();
 
 export const LibrosProvider = ({ children }) => {
-  const [productos, setProductos] = useState("");
+  const [productos, setProductos] = useState([]);
   const [libroSeleccionado, setLibroSeleccionado] = useState("");
   const [productoSeleccionado, setProductoSeleccionado] = useState("");
   const [carrito, setCarrito] = useState([]);
@@ -16,9 +17,9 @@ export const LibrosProvider = ({ children }) => {
         item.producto_id === producto.producto_id
           ? { ...item, cantidad: item.cantidad + 1 }
           : item
-          
       )
     );
+    console.log(carrito);
   };
 
   const decrementarProducto = (producto) => {
@@ -32,34 +33,43 @@ export const LibrosProvider = ({ children }) => {
   };
 
   const agregarAlCarrito = (detalles) => {
-    // Verificación para saber si el producto ya está en el carrito
-    const productoExistente = carrito.find(item => item.producto_id === detalles.producto_id);
-    if (productoExistente) { // Si el producto ya existe en el carrito
-      incrementarProducto(productoExistente); // incrementar la cantidad 
-    } else { // Si el producto no existe en el carrito
-      setCarrito(prevCarrito => [...prevCarrito, { ...detalles, cantidad: 1 }]); // agregar el producto al carrito
+    if (detalles.producto_stock < 1) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Producto sin stock!',
+        text: `El libro "${detalles.producto_nombre}" no se encuentra disponible en este momento`
+      });
+      return;
     }
-    // Obtener la cantidad del producto después de agregarlo al carrito
-    const cantidadProducto = carrito.find(item => item.producto_id === detalles.producto_id)?.cantidad || 1;
+
+    const productoExistente = carrito.find(item => item.producto_id === detalles.producto_id);
+
+    if (productoExistente) {
+      incrementarProducto(productoExistente);
+    } else {
+      setCarrito(prevCarrito => [...prevCarrito, { ...detalles, cantidad: 1 }]);
+    }
+
     Swal.fire({
       icon: 'success',
       title: '¡Producto agregado!',
-      text: `
-      Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`
+      text: `Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`
     });
-
     console.log(carrito);
-    console.log(detalles);
-    console.log(cantidadProducto);
   };
 
-  const totalCarrito = carrito.reduce((acc, item) => acc + item.producto_precio * item.cantidad, 0);//calcula el total del carrito
+  const totalCarrito = carrito.reduce((acc, item) => acc + item.producto_precio * item.cantidad, 0);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/productos");
-        setProductos(response.data);
+        const response = await axios.get("http://localhost:3001/productos?limits=20");
+        const productosConNumeros = response.data.map(producto => ({
+          ...producto,
+          producto_precio: parseFloat(producto.producto_precio),
+        }));
+
+        setProductos(productosConNumeros);
       } catch (error) {
         console.error("Error al obtener la lista de productos:", error);
       }
@@ -67,8 +77,6 @@ export const LibrosProvider = ({ children }) => {
 
     fetchProducts();
   }, []);
-
-
 
   const valoresContextoLibros = {
     productos,
@@ -82,7 +90,7 @@ export const LibrosProvider = ({ children }) => {
     setCarrito,
     incrementarProducto,
     decrementarProducto,
-    };
+  };
 
   return (
     <LibrosContext.Provider value={{ valoresContextoLibros }}>
