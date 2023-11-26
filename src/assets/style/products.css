@@ -42,11 +42,6 @@
   margin: 2%;
 }
 
-.castros_products__boton_like {
-  background-color: #5d573f;
-  font-size: 1.3rem;
-}
-
 .castros_products__contenedor_paginacion {
   width: 100%;
   display: flex;

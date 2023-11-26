@@ -4,8 +4,7 @@ import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
 import "../assets/style/products.css";
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+
 
 const Products = () => {
   const navigate = useNavigate();
@@ -13,15 +12,16 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 6;
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const { setLibroSeleccionado, setCarrito, carrito } = valoresContextoLibros;
+  const { setLibroSeleccionado, agregarAlCarrito } = valoresContextoLibros;
 
+  //petición a la base de datos
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:3001/productos?limits=20");
         const productosConNumeros = response.data.map(producto => ({
           ...producto,
-          producto_precio: parseFloat(producto.producto_precio),
+          producto_precio: parseFloat(producto.producto_precio), // convertir el precio a número
         }));
 
         setProducts(productosConNumeros);
@@ -37,10 +37,6 @@ const Products = () => {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  const handleLike = (productId) => {
-    console.log(`Me gusta el producto con ID ${productId}`);
-  };
-
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -55,17 +51,6 @@ const Products = () => {
     navigate(`/productos/${detalles.producto_id}`);
   };
 
-  const agregarAlCarrito = (detalles) => {
-    setCarrito([...carrito, { ...detalles }]);
-    Swal.fire({
-      icon: 'success',
-      title: '¡Producto agregado!',
-      text: `Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`,
-      customClass: {
-        confirmButton:'#8B4513',
-      },
-    });
-  };
 
   return (
     <div className="castros_products__contenedor">
@@ -103,9 +88,6 @@ const Products = () => {
               <p>{producto_descripcion}</p>
               <p>Autores: {producto_autores}</p>
               <p>Precio: {producto_precio}</p>
-              <button className="castros_products__boton_like" onClick={() => handleLike(producto_id)}>
-                <span>♡</span>
-              </button>
               <button className="castros_products__boton_carrito" onClick={() => agregarAlCarrito({
                 producto_id,
                 producto_imagen,
@@ -127,7 +109,7 @@ const Products = () => {
           {"<"}
         </button>
         {pageNumbers.map((number) => (
-          <button 
+          <button
             key={number}
             onClick={() => paginate(number)}
             className={currentPage === number ? "castros_products__boton_paginacion_actual" : "castros_products__boton_paginacion"}
