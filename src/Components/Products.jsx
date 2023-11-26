@@ -62,8 +62,8 @@ const Products = () => {
 
   return (
     <div className="castros_products__contenedor">
-      <h2>Galería de Productos</h2>
-      <div className="castros_products__card" style={{ display: "flex", flexWrap: "wrap" }}>
+      <h1 className="castros_products__titulo">Productos</h1>
+      <div className="castros_products__contenedor_cards">
         {currentProducts.map(
           ({
             producto_id,
@@ -73,7 +73,7 @@ const Products = () => {
             producto_autores,
             producto_precio,
           }) => (
-            <div key={producto_id}>
+            <div className="castros_products__card" key={producto_id}>
               <div
                 onClick={() =>
                   verDetalles({
