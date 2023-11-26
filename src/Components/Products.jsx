@@ -11,7 +11,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 6;
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const { setLibroSeleccionado, setProductoSeleccionado, productoSeleccionado, setCarrito, carrito } = valoresContextoLibros;
+  const { setLibroSeleccionado, setCarrito, carrito } = valoresContextoLibros;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -54,9 +54,8 @@ const Products = () => {
   };
 
   const agregarAlCarrito = (detalles) => {
-    setProductoSeleccionado(detalles);
-    setCarrito([...carrito, { ...productoSeleccionado}]);
-    console.log(productoSeleccionado);
+    setCarrito([...carrito, { ...detalles }]);
+    console.log(detalles);
     console.log(carrito);
   };
 
