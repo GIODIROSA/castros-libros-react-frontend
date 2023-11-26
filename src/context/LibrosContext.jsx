@@ -15,6 +15,7 @@ export const LibrosProvider = ({ children }) => {
         item.producto_id === producto.producto_id
           ? { ...item, cantidad: item.cantidad + 1 }
           : item
+          
       )
     );
   };

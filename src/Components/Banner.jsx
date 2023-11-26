@@ -1,4 +1,3 @@
-import React from "react";
 import "@splidejs/splide/dist/css/splide.min.css";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "../assets/style/Banner.css";

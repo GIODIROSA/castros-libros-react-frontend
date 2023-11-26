@@ -1,85 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import styled from "styled-components";
 import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
-
-const GalleryContainer = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-`;
-
-const ProductCard = styled.div`
-  padding: 2%;
-  margin: 2%;
-  text-align: center;
-  flex: 1 0 21%;
-
-  @media (max-width: 767px) {
-    flex: 1 0 48%;
-  }
-`;
-
-const ProductImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-`;
-
-const CartButton = styled.button`
-  background-color: #ece9e2;
-  color: #fff;
-  padding: 2% 4%;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 2%;
-`;
-
-const LikeButton = styled.button`
-  background-color: #5d573f;
-  font-size: 1.3rem;
-  color: #fff;
-  padding: 2% 4%;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 2%;
-`;
-
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2%;
-`;
-
-const PaginationButton = styled.button`
-  background-color: ${(props) =>
-    props.currentPage ? "#5D573F" : "transparent"};
-  color: ${(props) => (props.currentPage ? "#fff" : "")};
-  padding: 1% 2%;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0;
-`;
-
-const ArrowButton = styled.button`
-  background-color: transparent;
-  padding: 1% 2%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 0 1%;
-`;
+import "../assets/style/products.css";
 
 const Products = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]); //estado para la lista de productos
-  const [currentPage, setCurrentPage] = useState(1); //estado para la paginación
-  const productsPerPage = 6; //cantidad de cards por página
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6;
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { setLibroSeleccionado, setProductoSeleccionado, productoSeleccionado, setCarrito, carrito } = valoresContextoLibros;
 
@@ -87,7 +17,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:3001/productos?limits=20");
-        const productosConNumeros = response.data.map(producto => ({// Convierte string precios a números
+        const productosConNumeros = response.data.map(producto => ({
           ...producto,
           producto_precio: parseFloat(producto.producto_precio),
         }));
@@ -101,33 +31,25 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const indexOfLastProduct = currentPage * productsPerPage; //índice del último producto de la página
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage; //índice del primer producto de la página
-  const currentProducts = products.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  ); //lista de productos de la página actual
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handleLike = (productId) => {
-    //aquí va la lógica para manejar el botón Me gusta
     console.log(`Me gusta el producto con ID ${productId}`);
   };
-
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  //generación de lista de números de página
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
-  // Función para guardar el libro seleccionado e ir la ruta del mismo
   const verDetalles = (detalles) => {
     setLibroSeleccionado(detalles);
-
     navigate(`/productos/${detalles.producto_id}`);
   };
 
@@ -138,11 +60,10 @@ const Products = () => {
     console.log(carrito);
   };
 
-
   return (
-    <GalleryContainer>
+    <div className="castros_products__contenedor">
       <h2>Galería de Productos</h2>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="castros_products__card" style={{ display: "flex", flexWrap: "wrap" }}>
         {currentProducts.map(
           ({
             producto_id,
@@ -152,7 +73,7 @@ const Products = () => {
             producto_autores,
             producto_precio,
           }) => (
-            <ProductCard key={producto_id}>
+            <div key={producto_id}>
               <div
                 onClick={() =>
                   verDetalles({
@@ -166,19 +87,19 @@ const Products = () => {
                 }
                 style={{ cursor: "pointer" }}
               >
-                <ProductImage
+                <img className="castros_products__imagen"
                   src={`http://localhost:3001/${producto_imagen}`}
                   alt={producto_nombre}
                 />
                 <h3>{producto_nombre}</h3>
-              </div>{" "}
+              </div>
               <p>{producto_descripcion}</p>
               <p>Autores: {producto_autores}</p>
               <p>Precio: {producto_precio}</p>
-              <LikeButton onClick={() => handleLike(producto_id)}>
+              <button className="castros_products__boton_like" onClick={() => handleLike(producto_id)}>
                 <span>♡</span>
-              </LikeButton>
-              <CartButton onClick={() => agregarAlCarrito({
+              </button>
+              <button className="castros_products__boton_carrito" onClick={() => agregarAlCarrito({
                 producto_id,
                 producto_imagen,
                 producto_nombre,
@@ -187,29 +108,27 @@ const Products = () => {
                 producto_precio,
               })}>
                 <CartIcon />
-              </CartButton>
-            </ProductCard>
+              </button>
+            </div>
           )
         )}
       </div>
-      <PaginationContainer>
-        <ArrowButton
-          onClick={() =>
-            setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
-          }
+      <div className="castros_products__contenedor_paginacion">
+        <button className="castros_products__boton_flecha"
+          onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
         >
           {"<"}
-        </ArrowButton>
+        </button>
         {pageNumbers.map((number) => (
-          <PaginationButton
+          <button 
             key={number}
             onClick={() => paginate(number)}
-          /*   currentPage={currentPage === number} */
+            className={currentPage === number ? "castros_products__boton_paginacion_actual" : "castros_products__boton_paginacion"}
           >
             {number}
-          </PaginationButton>
+          </button>
         ))}
-        <ArrowButton
+        <button className="castros_products__boton_flecha"
           onClick={() =>
             setCurrentPage((prevPage) =>
               Math.min(
@@ -220,9 +139,9 @@ const Products = () => {
           }
         >
           {">"}
-        </ArrowButton>
-      </PaginationContainer>
-    </GalleryContainer>
+        </button>
+      </div>
+    </div>
   );
 };
 
