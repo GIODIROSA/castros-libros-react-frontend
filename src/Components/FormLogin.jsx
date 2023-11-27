@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../assets/style/formLogin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import BookManager from "../pages/BookManager";
+import { UsuarioContext } from "../context/UsuarioContext";
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -14,6 +14,8 @@ const FormLogin = () => {
     email: "",
     password: "",
   });
+  const { valoresContextoUsuario } = useContext(UsuarioContext);
+  const { setUsuarioGlobal, usuarioGlobal } = valoresContextoUsuario;
 
   //función que llama a la API del login
   const handleLogin = async (email, password) => {
@@ -45,8 +47,11 @@ const FormLogin = () => {
         const { data } = await axios.get(urlServer + endpoint, {
           headers: { Authorization: "Bearer " + token },
         });
-        /*  setUsuarioGlobal(data); */
-        setUsuario(data);
+        console.log("la data", data)
+          setUsuarioGlobal(data); 
+          navigate("/perfil")
+         
+      /*   setUsuario(data); */
       } catch ({ response: { data: message } }) {
         alert(message + " 🙁");
         console.log(message);

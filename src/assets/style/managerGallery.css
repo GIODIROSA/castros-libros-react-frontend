@@ -1,0 +1,33 @@
+.manager-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 20px; 
+    margin: 2% 4% 0 4%;
+  }
+  
+  .card {
+    width: 18%;
+    height: 20rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+   margin: 1% 1%;
+
+  }
+  
+  .card img {
+    width: 100%;
+    height: 40%;
+    object-fit: cover;
+  }
+  
+  .card-info {
+    padding: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      width: 100%;
+    }
+  }

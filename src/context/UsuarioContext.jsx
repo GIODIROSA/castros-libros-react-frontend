@@ -2,12 +2,12 @@ import { createContext, useState } from "react";
 
 export const UsuarioContext = createContext();
 
-export const LibrosProvider = ({ children }) => {
-  const [usuarioRegistrado, setUsuarioRegistrado] = useState("");
+export const UsuarioProvider = ({ children }) => {
+  const [usuarioGlobal, setUsuarioGlobal] = useState("");
 
   const valoresContextoUsuario = {
-    usuarioRegistrado,
-    setUsuarioRegistrado,
+    usuarioGlobal,
+    setUsuarioGlobal,
   };
 
   return (

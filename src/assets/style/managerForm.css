@@ -1,0 +1,46 @@
+.inputs-container {
+    margin: 2% 8% 2% 8%; /* Adjusted margin for smaller screens */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .manager-form_inputs {
+    padding: 10px;
+    margin: 1% 1%;
+   max-width: 100%;
+    box-sizing: border-box; /* Include padding in the width */
+  }
+
+  .manager_typography {
+    margin: 2% 5% 0 5%;
+    border-bottom: 1px solid #9c947399;
+  }
+
+  .manager_typography h4 {
+    margin: 0.5%;
+  }
+
+  .manager-button_action {
+    display: flex; 
+    justify-content: flex-end;
+    margin-right: 10%;
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 780px) {
+    .inputs-container {
+      margin: 3% 3% 5% 5%; /* Adjusted margin for smaller screens */
+      justify-content: center;
+    }
+
+    .manager-button_action {
+        justify-content: center;
+        
+      }
+    
+  
+      .manager-form_inputs {
+      width: 100%;
+    }
+  }
+

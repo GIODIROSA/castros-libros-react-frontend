@@ -4,12 +4,14 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router/AppRouter.jsx";
 import { LibrosProvider } from "./context/LibrosContext.jsx";
-
+import { UsuarioProvider } from "./context/UsuarioContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <LibrosProvider>
-      <RouterProvider router={router} />
-    </LibrosProvider>
+    <UsuarioProvider>
+      <LibrosProvider>
+        <RouterProvider router={router} />
+      </LibrosProvider>
+    </UsuarioProvider>
   </React.StrictMode>
 );
