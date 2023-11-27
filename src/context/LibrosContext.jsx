@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import axios from "axios";
+import useFetchLibros from "../hook/useFetch";
 
 export const LibrosContext = createContext();
 
@@ -60,23 +60,7 @@ export const LibrosProvider = ({ children }) => {
 
   const totalCarrito = carrito.reduce((acc, item) => acc + item.producto_precio * item.cantidad, 0);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/productos?limits=20");
-        const productosConNumeros = response.data.map(producto => ({
-          ...producto,
-          producto_precio: parseFloat(producto.producto_precio),
-        }));
-
-        setProductos(productosConNumeros);
-      } catch (error) {
-        console.error("Error al obtener la lista de productos:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  useFetchLibros(setProductos);
 
   const valoresContextoLibros = {
     productos,
