@@ -2,44 +2,39 @@ import axios from "axios";
 import "../assets/style/detalleCart.css";
 import { LibrosContext } from "../context/LibrosContext";
 import { useContext } from "react";
+import { UsuarioContext } from "../context/UsuarioContext";
 
 const DetalleCart = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { carrito, incrementarProducto, decrementarProducto, totalCarrito } = valoresContextoLibros;
+  const { usuarioGlobal } = useContext(UsuarioContext);
 
- const enviarPedidoAlServidor = async () => {
+  const enviarPedidoAlServidor = async () => {
     try {
-       // construccion del objeto de pedido con la estructura que espera el servidor
-       const pedido = {
-         pedido_fecha: new Date().toISOString(),
-         usuario_id: 2,
-         pedido_estado: true,
-         detalle_pedido: carritoFiltrado.map(item => ({
-           detalle_cantidad: item.cantidad,
-           detalle_precio_producto: item.producto_precio,
-           producto_id: item.producto_id,
-         })),
-       };
+      // Filtra el carrito para excluir productos con cantidad cero
+      const carritoFiltrado = carrito.filter((item) => item.cantidad > 0);
+  
+      // construcción del objeto de pedido con la estructura que espera el servidor
+      const pedido = {
+        pedido_fecha: new Date().toISOString(),
+        usuario_id: 2,
+        pedido_estado: false,
+        detalle_pedido: carritoFiltrado.map(item => ({
+          detalle_cantidad: item.cantidad,
+          detalle_precio: item.producto_precio, 
+          producto_id: item.producto_id,
+        })),
+      };
+      console.log(usuarioGlobal);
+      console.log(pedido);
+  
+      // petición POST al servidor
+      const response = await axios.post('http://localhost:3001/crear_pedido', pedido);
 
-     console.log(pedido);
-
-     // petición POST al servidor
-     const response = await axios.post('http://localhost:3001/crear_detalle_pedido', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(pedido),
-      });
-
-      if (response.ok) { // si la petición fue exitosa
-         console.log('Pedido enviado correctamente.'); // muestra un mensaje de exito en la consola
-       } else { // si la petición falla, muestra un mensaje de error en la consola
-        console.error('Error al enviar el pedido al servidor.');
-       }
-     } catch (error) { // si la petición falla, muestra un mensaje de error en la consola
-       console.error('Error en la solicitud:', error);
-     }
-   };
+    } catch (error) { // si la petición falla, muestra un mensaje de error en la consola
+      console.error('Error en la solicitud:', error);
+    }
+  };
 
   const carritoFiltrado = carrito.filter((item) => item.cantidad > 0); // Filtra el carrito para excluir productos con cantidad cero
 
