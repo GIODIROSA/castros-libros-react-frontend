@@ -4,20 +4,22 @@ import "../assets/style/profile.css";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
 
   const handleButton = () => {
-navigate("/")
-  }
+    navigate("/");
+  };
   return (
     <div className="profile-contenedor">
       <h1>
         Bienvenido/a <br /> {usuarioGlobal?.nombre} {usuarioGlobal?.apellido}
       </h1>
       <p>¡Gracias por visitarnos!</p>
-      <button  className="button-profile"onClick={handleButton}>Seguir Comprando</button>
+      <button className="button-profile" onClick={handleButton}>
+        Seguir Comprando
+      </button>
     </div>
   );
 };

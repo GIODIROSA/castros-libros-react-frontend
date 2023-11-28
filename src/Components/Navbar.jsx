@@ -36,7 +36,13 @@ const Navbar = () => {
       <nav className="libreria-navbar">
         <div className="libreria-navbar_container-logo">
           <NavLink to="/">{logoNavBarSvg}</NavLink>
+          {usuarioGlobal && usuarioGlobal.nombre ? (
+            <p>Hola, {usuarioGlobal?.nombre}</p>
+          ) : (
+            ""
+          )}
         </div>
+
         <ul className="libreria-navbar_nav-links">
           <li>
             <NavLink to="/">Home</NavLink>

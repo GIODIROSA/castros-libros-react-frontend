@@ -15,7 +15,7 @@ const FormLogin = () => {
     password: "",
   });
   const { valoresContextoUsuario } = useContext(UsuarioContext);
-  const { setUsuarioGlobal, usuarioGlobal } = valoresContextoUsuario;
+  const { setUsuarioGlobal } = valoresContextoUsuario;
 
   //función que llama a la API del login
   const handleLogin = async (email, password) => {
@@ -47,13 +47,13 @@ const FormLogin = () => {
         const { data } = await axios.get(urlServer + endpoint, {
           headers: { Authorization: "Bearer " + token },
         });
-        console.log("la data", data)
-          setUsuarioGlobal(data); 
-          navigate("/perfil")
-         
-      /*   setUsuario(data); */
+        console.log("la data", data);
+        setUsuarioGlobal(data);
+        navigate("/perfil");
+
+        /*   setUsuario(data); */
       } catch ({ response: { data: message } }) {
-        alert(message + " 🙁");
+        alert("Hubo un error en el incio de sesión. Revisa tus credenciales");
         console.log(message);
       }
     };
