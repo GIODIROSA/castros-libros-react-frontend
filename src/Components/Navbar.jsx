@@ -47,7 +47,7 @@ const Navbar = () => {
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
-          {usuarioGlobal && usuarioGlobal.rol === "admin" ? (
+          {usuarioGlobal && usuarioGlobal?.rol === "admin" ? (
             <li>
               <NavLink to="/manager">Admin</NavLink>
             </li>

@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import ".././assets/style/bookDetails.css";
-import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import { LibrosContext } from "../context/LibrosContext";
 import { useNavigate } from "react-router-dom";
+import { UsuarioContext } from "../context/UsuarioContext";
 
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
   const { libroSeleccionado } = valoresContextoLibros;
   const navigate = useNavigate();
+  const { valoresContextoUsuario } = useContext(UsuarioContext);
+  const { usuarioGlobal } = valoresContextoUsuario;
 
   const {
     producto_nombre,
@@ -18,12 +20,11 @@ const BookDetail = () => {
     producto_autores,
   } = libroSeleccionado;
 
-   useEffect(() => {
+  useEffect(() => {
     if (!libroSeleccionado) {
       navigate("/");
     }
-  }, [libroSeleccionado]); 
-
+  }, [libroSeleccionado]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -43,11 +44,17 @@ const BookDetail = () => {
     <div className="book-detail_container">
       <div className="book-detail">
         <div className="book-image">
-          <img src={`http://localhost:3001/${producto_imagen}`} alt={producto_nombre} />
+          <img
+            src={`http://localhost:3001/${producto_imagen}`}
+            alt={producto_nombre}
+          />
         </div>
         <div className="book-info">
           <h2 className="book-title">{producto_nombre}</h2>
-          <p> <b>Autor:</b> {producto_autores} </p>
+          <p>
+            {" "}
+            <b>Autor:</b> {producto_autores}{" "}
+          </p>
           <p className="book-price">Precio: ${producto_precio}</p>
           <p className="book-description">{producto_descripcion}</p>
           <div className="quantity-container">
@@ -60,11 +67,18 @@ const BookDetail = () => {
                 +
               </button>
             </div>
-            <ButtonAlCarrito className="libreria-castro__boton-agregar-carrito">
+
+            <button
+              className={
+                usuarioGlobal
+                  ? "libreria-castro__boton-agregar-carrito"
+                  : "libreria-castro__boton-agregar-carrito-disabled"
+              }
+            >
               Agregar al carrito
-            </ButtonAlCarrito>
+            </button>
           </div>
-          <button className="add-to-favorites">Agregar a Favoritos</button>
+          {/* <button className="add-to-favorites">Agregar a Favoritos</button> */}
         </div>
       </div>
     </div>
