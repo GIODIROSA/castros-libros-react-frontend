@@ -19,8 +19,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  border-radius:6px;
-
+  border-radius: 6px;
 }
 
 .castros-banner__contenedor-imagen img {
@@ -57,25 +56,22 @@
   justify-content: center;
   align-items: center;
   padding: 0px 20px;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .castros-banner-btn:hover {
   background-color: #5d573f;
 }
 
-
 .castros-banner-btn a {
   color: #fff;
   font-size: 20px;
   text-decoration: none;
-
 }
 
 .splide__pagination {
   bottom: -1.5rem;
 }
-
 
 .splide__pagination__page.is-active {
   transform: scale(1.5);
@@ -86,27 +82,22 @@
   background-color: #c4c4c4;
 }
 
-
-@media screen and (min-width: 300px) and (max-width: 768px) {
-
+@media screen and (max-width: 768px) {
   .castros-banner__contenedor-imagen {
-    height: 600px;
+    height: 400px;
   }
 
   .castros-banner__contenido {
-    bottom: 2rem;
-    left: 2rem;
+    bottom: 1rem;
+    left: 1rem;
   }
 
   .castros-banner-titulo {
-    color: #fff;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .castros-banner-parrafo {
-    color: #fff;
-    font-size: 1rem;
-    padding-bottom: 29px;
+    font-size: 0.8rem;
+    padding-bottom: 15px;
   }
-
 }

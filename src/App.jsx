@@ -1,6 +1,6 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFound from './pages/NotFound'; 
+import Cart from './pages/Cart';
 
 const Home = () => (
   <div>
@@ -14,6 +14,7 @@ const App = () => {
     <Router>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/cart" exact component={Cart} />
           <Route component={NotFound} />
         </Switch>
     </Router>

@@ -2,12 +2,16 @@ import axios from "axios";
 import "../assets/style/detalleCart.css";
 import { LibrosContext } from "../context/LibrosContext";
 import { useContext } from "react";
-import { UsuarioContext } from "../context/UsuarioContext";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 
 const DetalleCart = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { carrito, incrementarProducto, decrementarProducto, totalCarrito } = valoresContextoLibros;
-  const { usuarioGlobal } = useContext(UsuarioContext);
+
+  const navigate = useNavigate();
+
 
   const enviarPedidoAlServidor = async () => {
     try {
@@ -25,13 +29,32 @@ const DetalleCart = () => {
           producto_id: item.producto_id,
         })),
       };
-      console.log(usuarioGlobal);
-      console.log(pedido);
+            
+      // Pregunta al usuario si está seguro de realizar el pago
+      const confirmacionPago = await Swal.fire({
+        icon: 'question',
+        title: 'Confirmar pago',
+        text: '¿Estás seguro de realizar el pago?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, realizar pago',
+        cancelButtonText: 'Cancelar',
+      });
   
-      // petición POST al servidor
-      const response = await axios.post('http://localhost:3001/crear_pedido', pedido);
-
-    } catch (error) { // si la petición falla, muestra un mensaje de error en la consola
+      // Si el usuario confirma, realiza la petición al servidor
+      if (confirmacionPago.isConfirmed) {
+        await axios.post('http://localhost:3001/crear_pedido', pedido);
+  
+        // Muestra un modal de éxito si la petición fue exitosa
+        Swal.fire({
+          icon: 'success',
+          title: 'Pedido creado',
+          text: 'El pedido se creó correctamente',
+        });
+  
+        // Redirige al usuario a la página de inicio
+        navigate('/');
+      }
+    } catch (error) {
       console.error('Error en la solicitud:', error);
     }
   };

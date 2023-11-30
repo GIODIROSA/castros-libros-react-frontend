@@ -7,7 +7,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
-  const { libroSeleccionado } = valoresContextoLibros;
+  const {  libroSeleccionado } = valoresContextoLibros;
   const navigate = useNavigate();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;

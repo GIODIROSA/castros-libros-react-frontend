@@ -27,10 +27,15 @@
 
 .castros_products__imagen {
   max-width: 100%;
-  height: auto;
+  height: 30vw;
   border-radius: 4px;
 }
 
+@media (max-width: 767px) {
+  .castros_products__imagen {
+    height: 60vw;
+  }
+}
 .castros_products__boton_carrito,
 .castros_products__boton_like {
   background-color: #ece9e2;
