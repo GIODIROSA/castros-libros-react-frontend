@@ -66,9 +66,9 @@ const Products = () => {
                 />
                 <h3>{producto_nombre}</h3>
               </div>
-              <p>{producto_descripcion}</p>
               <p>Autores: {producto_autores}</p>
-              <p>Precio: {producto_precio}</p>
+              <p>Precio: ${producto_precio}</p>
+              <p>Clickea el libro para ver más detalles...</p>
               <button
                 className="castros_products__boton_carrito"
                 onClick={() => agregarAlCarrito({

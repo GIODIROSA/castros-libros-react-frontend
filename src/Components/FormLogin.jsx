@@ -3,6 +3,9 @@ import "../assets/style/formLogin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "sweetalert2/dist/sweetalert2.css";
+import Swal from "sweetalert2";
+
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -25,7 +28,7 @@ const FormLogin = () => {
         password,
       });
       console.log("Respuesta del servidor:", token.data);
-      alert("Inicio de sesión exitoso");
+      Swal.fire("¡Inicio de sesión exitoso!", "", "success");
       localStorage.setItem("token", token.data);
       setUsuario({
         nombre: "",
@@ -36,6 +39,7 @@ const FormLogin = () => {
       });
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      Swal.fire("Error", "Hubo un error al iniciar sesión", "error");
     }
 
     const getUsuarioData = async () => {
@@ -53,7 +57,7 @@ const FormLogin = () => {
 
         /*   setUsuario(data); */
       } catch ({ response: { data: message } }) {
-        alert("Hubo un error en el incio de sesión. Revisa tus credenciales");
+        Swal.fire("Error", "Error en acceso, usuario o contraseña incorrectas", "error");
         console.log(message);
       }
     };
@@ -71,12 +75,13 @@ const FormLogin = () => {
           usuario
         );
         console.log("Respuesta del servidor:", response.data);
-        alert("Usuario registrado con éxito");
+        Swal.fire("¡Usuario registrado con éxito!", "", "success");
         setTimeout(() => {
           navigate("/");
         }, 500);
       }
     } catch (error) {
+      Swal.fire("Error", "Hubo un error al registrar al usuario", "error");
       console.error("Error al enviar la solicitud:", error);
     }
   };
@@ -94,7 +99,7 @@ const FormLogin = () => {
         password: "",
       });
     } else {
-      alert("Email y contraseña son requeridos");
+      Swal.fire("Error", "Email y contraseña son requeridos", "error");
     }
   };
 

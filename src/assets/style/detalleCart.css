@@ -15,6 +15,11 @@
   max-width: 50%;
 }
 
+.left-container span{
+margin: 5%;
+font-size: 1.3em;
+}
+
 .cart-detail_container {
   display: flex;
   justify-content: center;

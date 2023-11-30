@@ -46,11 +46,8 @@ const Banner = () => {
                     Bajo la sombra de las letras
                   </h1>
                   <p className="castros-banner-parrafo margin-none">
-                    tú librería de confianza
+                    tu librería de confianza
                   </p>
-                  <div className="castros-banner-btn">
-                    <a href="!#">Ver favorito</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -61,7 +58,7 @@ const Banner = () => {
               <div className="castros-banner__contenedor-imagen">
                 <img
                   className="castros-banner-imagen"
-                  src="../../../public/img/banner1.jpg"
+                  src="../../../public/img/banner2.jpg"
                   alt="imagen banner"
                 />
 
@@ -72,11 +69,8 @@ const Banner = () => {
                     Bajo la sombra de las letras
                   </h1>
                   <p className="castros-banner-parrafo margin-none">
-                    tú librería de confianza
+                    tu librería de confianza
                   </p>
-                  <div className="castros-banner-btn">
-                    <a href="!#">Ver favorito</a>
-                  </div>
                 </div>
               </div>
             </div>
