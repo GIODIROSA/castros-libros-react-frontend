@@ -7,8 +7,11 @@
   }
   
   .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     width: 18%;
-    height: 20rem;
+    height: 25rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
@@ -18,7 +21,7 @@
   
   .card img {
     width: 100%;
-    height: 40%;
+    height: 50%;
     object-fit: cover;
   }
   
@@ -31,3 +34,16 @@
       width: 100%;
     }
   }
+
+  .card {
+  position: relative;
+}
+
+.icon-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.icon-container button {
+  margin-right: 4%; /* Espacio entre íconos si es necesario */
+}

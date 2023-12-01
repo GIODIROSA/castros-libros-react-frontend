@@ -19,8 +19,8 @@ const Navbar = () => {
       title: "¿Está seguro de cerrar sesión?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#5d573f",
+      cancelButtonColor: "#b3ae8df9",
       confirmButtonText: "Sí, salir",
       cancelButtonText: "No",
     }).then((result) => {

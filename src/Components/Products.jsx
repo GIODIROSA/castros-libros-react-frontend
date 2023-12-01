@@ -81,7 +81,7 @@ const Products = () => {
                   producto_stock,
                 })}
               >
-                <CartIcon />
+                <CartIcon/>
               </button>
             </div>
           )
