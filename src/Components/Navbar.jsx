@@ -3,11 +3,12 @@ import "../assets/style/navbar.css";
 import CartIcon from "../assets/icons/cartIcon";
 import profileIcon from "../assets/icons/profileIcon";
 import logoNavBar from "../assets/icons/logoNavBar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UsuarioContext } from "../context/UsuarioContext";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const [conteoCarrito, setconteoCarrito] = useState(0);
   const profileIconSvg = profileIcon();
   const logoNavBarSvg = logoNavBar();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
@@ -52,9 +53,12 @@ const Navbar = () => {
         ) : null}
         <p>|</p>
         <li>
-          <NavLink to="/cart">
+          <div className="cart-icon-container">
             <CartIcon color="black" />
-          </NavLink>
+            {conteoCarrito > 0 && (
+              <span className="badge">{conteoCarrito}</span>
+            )}
+          </div>
         </li>
         {!usuarioGlobal || usuarioGlobal.length === 0 ? (
           <li>
