@@ -68,7 +68,7 @@ const ManagerForm = () => {
       <form onSubmit={handleSubmit}>
         <div className="inputs-container">
           {" "}
-          <div>
+          <div className="manager-form_input-container">
             <label>Titulo</label>
             <input
               className="manager-form_inputs"
@@ -80,7 +80,7 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div>
+          <div className="manager-form_input-container">
             <label>Autor</label>
             <input
               className="manager-form_inputs"
@@ -92,7 +92,7 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div>
+          <div className="manager-form_input-container">
             <label>Precio</label>
             <input
               className="manager-form_inputs"
@@ -104,7 +104,7 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div>
+          <div className="manager-form_input-container">
             <label>Stock</label>
             <input
               className="manager-form_inputs"
@@ -116,19 +116,19 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div>
-            <label>Categoria</label>
+          <div className="manager-form_input-container">
+            <label>Categoría</label>
             <input
               className="manager-form_inputs"
               type="text"
               name="categoria"
-              placeholder="Categoria"
+              placeholder="Categoría"
               value={bookData.title}
               onChange={handleInputChange}
               required
             />
           </div>
-          <div>
+          <div className="manager-form_input-container">
             <label>Estado</label>
             <input
               className="manager-form_inputs"
@@ -140,17 +140,17 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div className="manager-form_input-container" style={{ display: "flex", flexDirection: "column" }}>
             <label>Imagen</label>
             <input
-              style={{ marginTop: "5%", paddingRight: "10%" }}
+             className="manager-form_inputs"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
             />
             {selectedImage && (
               <div>
-                <p>Preview</p>
+                <p style={{marginTop: "0px"}}>Preview</p>
                 <img
                   src={selectedImage}
                   alt="Preview"
@@ -159,7 +159,7 @@ const ManagerForm = () => {
               </div>
             )}
           </div>
-          <div>
+          <div className="manager-form_input-container">
             <label>Descripcion</label>
             <textarea
               rows="7"

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../assets/style/navbar.css";
-import cartIcon from "../assets/icons/cartIcon";
+import CartIcon from "../assets/icons/cartIcon";
 import profileIcon from "../assets/icons/profileIcon";
 import logoNavBar from "../assets/icons/logoNavBar";
 import { useContext } from "react";
@@ -8,7 +8,6 @@ import { UsuarioContext } from "../context/UsuarioContext";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const cartIconSvg = cartIcon();
   const profileIconSvg = profileIcon();
   const logoNavBarSvg = logoNavBar();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
@@ -32,42 +31,42 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <nav className="libreria-navbar">
-        <div className="libreria-navbar_container-logo">
-          <NavLink to="/">{logoNavBarSvg}</NavLink>
-          {usuarioGlobal && usuarioGlobal.nombre ? (
-            <p>Hola, {usuarioGlobal?.nombre}</p>
-          ) : (
-            ""
-          )}
-        </div>
+    <nav className="libreria-navbar">
+      <div className="libreria-navbar_container-logo">
+        <NavLink to="/">{logoNavBarSvg}</NavLink>
+        {usuarioGlobal && usuarioGlobal.nombre ? (
+          <p>Hola, {usuarioGlobal?.nombre}</p>
+        ) : (
+          ""
+        )}
+      </div>
 
-        <ul className="libreria-navbar_nav-links">
+      <ul className="libreria-navbar_nav-links">
+        <li>
+          <NavLink to="/">Home</NavLink>
+        </li>
+        {usuarioGlobal && usuarioGlobal?.rol === "admin" ? (
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/manager">Admin</NavLink>
           </li>
-          {usuarioGlobal && usuarioGlobal?.rol === "admin" ? (
-            <li>
-              <NavLink to="/manager">Admin</NavLink>
-            </li>
-          ) : null}
-          <p>|</p>
+        ) : null}
+        <p>|</p>
+        <li>
+          <NavLink to="/cart">
+            <CartIcon color="black" />
+          </NavLink>
+        </li>
+        {!usuarioGlobal || usuarioGlobal.length === 0 ? (
           <li>
-            <NavLink to="/cart">{cartIconSvg}</NavLink>
+            <NavLink to="/registro">{profileIconSvg}</NavLink>
           </li>
-          {!usuarioGlobal || usuarioGlobal.length === 0 ? (
-            <li>
-              <NavLink to="/registro">{profileIconSvg}</NavLink>
-            </li>
-          ) : (
-            <li>
-              <NavLink onClick={cerrarSesion}>Cerrar sesión</NavLink>
-            </li>
-          )}
-        </ul>
-      </nav>
-    </>
+        ) : (
+          <li>
+            <NavLink onClick={cerrarSesion}>Cerrar sesión</NavLink>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 };
 

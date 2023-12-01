@@ -4,7 +4,7 @@ import "../assets/style/bookManager.css";
 const BookManager = () => {
   return (
     <div>
-      <div>
+       <div>
         <ManagerForm />
       </div>
       <div className="warning">
