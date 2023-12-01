@@ -54,9 +54,57 @@ const ManagerForm = () => {
         <div className="inputs-container">
           {" "}
           <div>
+            <label>Titulo</label>
+            <input
+              className="manager-form_inputs"
+              type="text"
+              name="title"
+              placeholder="Título"
+              value={bookData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Autor</label>
+            <input
+              className="manager-form_inputs"
+              type="text"
+              name="autor"
+              placeholder="Autor"
+              value={bookData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Precio</label>
+            <input
+              className="manager-form_inputs"
+              type="text"
+              name="precio"
+              placeholder="Precio"
+              value={bookData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
+            <label>Stock</label>
+            <input
+              className="manager-form_inputs"
+              type="text"
+              name="stock"
+              placeholder="Stock"
+              value={bookData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div>
             <label>titulo</label>
             <input
-            className="manager-form_inputs"
+              className="manager-form_inputs"
               type="text"
               name="title"
               placeholder="Título"
@@ -68,7 +116,7 @@ const ManagerForm = () => {
           <div>
             <label>titulo</label>
             <input
-             className="manager-form_inputs"
+              className="manager-form_inputs"
               type="text"
               name="title"
               placeholder="Título"
@@ -78,9 +126,9 @@ const ManagerForm = () => {
             />
           </div>
           <div>
-            <label>titulo</label>
+            <label>Titulo</label>
             <input
-             className="manager-form_inputs"
+              className="manager-form_inputs"
               type="text"
               name="title"
               placeholder="Título"
@@ -90,60 +138,12 @@ const ManagerForm = () => {
             />
           </div>
           <div>
-            <label>titulo</label>
+            <label>Autor</label>
             <input
-             className="manager-form_inputs"
+              className="manager-form_inputs"
               type="text"
               name="title"
-              placeholder="Título"
-              value={bookData.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label>titulo</label>
-            <input
-             className="manager-form_inputs"
-              type="text"
-              name="title"
-              placeholder="Título"
-              value={bookData.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label>titulo</label>
-            <input
-             className="manager-form_inputs"
-              type="text"
-              name="title"
-              placeholder="Título"
-              value={bookData.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label>titulo</label>
-            <input
-             className="manager-form_inputs"
-              type="text"
-              name="title"
-              placeholder="Título"
-              value={bookData.title}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div>
-            <label>titulo</label>
-            <input
-             className="manager-form_inputs"
-              type="text"
-              name="title"
-              placeholder="Título"
+              placeholder="Autor"
               value={bookData.title}
               onChange={handleInputChange}
               required
@@ -159,7 +159,7 @@ const ManagerForm = () => {
       </div>
       <div className="book-form-container">
         <ManagerGallery />
-        </div>
+      </div>
     </div>
   );
 };
