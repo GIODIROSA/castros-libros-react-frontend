@@ -1,12 +1,15 @@
+
+
 .warning {
-    background-color: #ffe6e6;
-    border: 1px solid #ff3333;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px;
-  }
+  background-color: #ffe6e6;
+  border: 1px solid #ff3333;
+  padding: 1%;
+  border-radius: 5px;
+  margin: 5%;
   
-  .warning p {
-    color: #ff3333;
-    font-weight: bold;
-  }
+}
+
+.warning p {
+  color: #ff3333;
+  font-weight: bold;
+}

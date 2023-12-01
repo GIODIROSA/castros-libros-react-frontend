@@ -4,6 +4,21 @@ import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrit
 import ManagerGallery from "./ManagerGallery";
 
 const ManagerForm = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Realizar alguna validación de tipo de archivo si es necesario
+
+      // Mostrar la imagen previa si quieres
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const [bookData, setBookData] = useState({
     title: "",
     author: "",
@@ -102,48 +117,57 @@ const ManagerForm = () => {
             />
           </div>
           <div>
-            <label>titulo</label>
+            <label>Categoria</label>
             <input
               className="manager-form_inputs"
               type="text"
-              name="title"
-              placeholder="Título"
+              name="categoria"
+              placeholder="Categoria"
               value={bookData.title}
               onChange={handleInputChange}
               required
             />
           </div>
           <div>
-            <label>titulo</label>
+            <label>Estado</label>
             <input
               className="manager-form_inputs"
               type="text"
-              name="title"
-              placeholder="Título"
+              name="estado"
+              placeholder="Estado"
               value={bookData.title}
               onChange={handleInputChange}
               required
             />
           </div>
-          <div>
-            <label>Titulo</label>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <label>Imagen</label>
             <input
-              className="manager-form_inputs"
-              type="text"
-              name="title"
-              placeholder="Título"
-              value={bookData.title}
-              onChange={handleInputChange}
-              required
+              style={{ marginTop: "5%", paddingRight: "10%" }}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
             />
+            {selectedImage && (
+              <div>
+                <p>Preview</p>
+                <img
+                  src={selectedImage}
+                  alt="Preview"
+                  style={{ maxWidth: "100px" }}
+                />
+              </div>
+            )}
           </div>
           <div>
-            <label>Autor</label>
-            <input
+            <label>Descripcion</label>
+            <textarea
+              rows="7"
+              cols="50"
               className="manager-form_inputs"
               type="text"
-              name="title"
-              placeholder="Autor"
+              name="descripcion"
+              placeholder="Escribe una descripción"
               value={bookData.title}
               onChange={handleInputChange}
               required
