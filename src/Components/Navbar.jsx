@@ -6,9 +6,11 @@ import logoNavBar from "../assets/icons/logoNavBar";
 import { useContext, useState } from "react";
 import { UsuarioContext } from "../context/UsuarioContext";
 import Swal from "sweetalert2";
+import { LibrosContext } from "../context/LibrosContext";
 
 const Navbar = () => {
-  const [conteoCarrito, setconteoCarrito] = useState(0);
+  const { valoresContextoLibros } = useContext(LibrosContext);
+  const { carrito } = valoresContextoLibros;
   const profileIconSvg = profileIcon();
   const logoNavBarSvg = logoNavBar();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
@@ -55,8 +57,8 @@ const Navbar = () => {
         <li>
           <div className="cart-icon-container">
             <CartIcon color="black" />
-            {conteoCarrito > 0 && (
-              <span className="badge">{conteoCarrito}</span>
+            {carrito && carrito.length < 0 && (
+              <span className="badge">{carrito.length}</span>
             )}
           </div>
         </li>

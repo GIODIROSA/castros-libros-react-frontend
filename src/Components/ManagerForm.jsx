@@ -20,12 +20,6 @@ const ManagerForm = () => {
     }
   };
   const [bookData, setBookData] = useState({
-    title: "",
-    author: "",
-    genre: "",
-    description: "",
-    price: "",
-    image: null,
   });
 
   const handleInputChange = (event) => {
@@ -51,12 +45,7 @@ const ManagerForm = () => {
     console.log("Datos del libro:", bookData);
     // Limpia el formulario después de enviar los datos
     setBookData({
-      title: "",
-      author: "",
-      genre: "",
-      description: "",
-      price: "",
-      image: null,
+     
     });
   };
 
