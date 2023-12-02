@@ -2,51 +2,88 @@ import { useState } from "react";
 import "../assets/style/managerForm.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import ManagerGallery from "./ManagerGallery";
+import axios from "axios";
 
+// ManagerForm componente que muestra un formulario para agregar un nuevo libro desde el admin
 const ManagerForm = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // selectedImagen es el estado para almacenar la imagen seleccionada
+  const [bookData, setBookData] = useState({ // bookData es el estado que almacena los datos del libro
+    producto_nombre: "",
+    producto_imagen: "",
+    producto_descripcion: "",
+    producto_precio: "",
+    producto_categoria: "",
+    producto_autores: "",
+    producto_stock: "",
+    producto_estado: "",
+   });
 
+  // función que escucha el cambio en el input de la imagen
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]; //obtiene el primer objeto del array de archivos y lo almacena en la variable file
+    console.log("Imagen seleccionada:", file);
     if (file) {
-      // Realizar alguna validación de tipo de archivo si es necesario
-
-      // Mostrar la imagen previa si quieres
+      // validación de tipo de archivo
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; //allowedTypes es un array que contiene los tipos de archivos permitidos
+      if (!allowedTypes.includes(file.type)) {
+        alert("Debe cargar una imagen JPEG, PNG o JPG.");
+        return;
+      }
+  
+      // validación de tamaño de archivo
+      const maxSizeInBytes = 5 * 1024 * 1024; //permite archivos de hasta 5 MB, 1024 bytes = 1 KB, 1024 KB = 1 MB
+      if (file.size > maxSizeInBytes) {
+        alert("El tamaño de la imagen debe ser menor a 5 MB.");
+        return;
+      }
+  
+      // Si la imagen es válida, la convierte a base64 y la almacena en el estado selectedImage
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
-  };
-  const [bookData, setBookData] = useState({
-  });
 
+    console.log("Imagen seleccionada:", file);
+  };
+
+  // función que escucha el cambio en los inputs de texto
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+    console.log(`Cambio en ${name}:`, value);
     setBookData({
       ...bookData,
       [name]: value,
     });
   };
 
-  /* const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    setBookData({
-      ...bookData,
-      image: imageFile,
-    });
-  }; */
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Aquí puedes realizar la lógica para enviar los datos del libro a la base de datos
-    // Por ejemplo, puedes utilizar fetch() o axios para realizar una solicitud POST al servidor
-    console.log("Datos del libro:", bookData);
-    // Limpia el formulario después de enviar los datos
-    setBookData({
-     
-    });
+  
+    try {
+      // petición para enviar los datos del libro al servidor
+      const response = await axios.post("http://localhost:3001/admin", bookData);
+      console.log("Respuesta del servidor:", response.data);
+  
+      // limpia el formulario después de enviar los datos
+      setBookData({
+        producto_nombre: "",
+        producto_imagen: "",
+        producto_descripcion: "",
+        producto_precio: "",
+        producto_categoria: "",
+        producto_autores: "",
+        producto_stock: "",
+        producto_estado: "",
+      });
+
+      setSelectedImage(null);
+  
+    } catch (error) {
+      console.error("Error al enviar los datos del libro:", error);
+    }
   };
 
   return (
@@ -62,9 +99,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="title"
+              name="producto_nombre"
               placeholder="Título"
-              value={bookData.title}
+              value={bookData.producto_nombre}
               onChange={handleInputChange}
               required
             />
@@ -74,9 +111,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="autor"
+              name="producto_autores"
               placeholder="Autor"
-              value={bookData.title}
+              value={bookData.producto_autores}
               onChange={handleInputChange}
               required
             />
@@ -86,9 +123,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="precio"
+              name="producto_precio"
               placeholder="Precio"
-              value={bookData.title}
+              value={bookData.producto_precio}
               onChange={handleInputChange}
               required
             />
@@ -98,9 +135,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="stock"
+              name="producto_stock"
               placeholder="Stock"
-              value={bookData.title}
+              value={bookData.producto_stock}
               onChange={handleInputChange}
               required
             />
@@ -110,9 +147,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="categoria"
+              name="producto_categoria"
               placeholder="Categoría"
-              value={bookData.title}
+              value={bookData.producto_categoria}
               onChange={handleInputChange}
               required
             />
@@ -122,9 +159,9 @@ const ManagerForm = () => {
             <input
               className="manager-form_inputs"
               type="text"
-              name="estado"
+              name="producto_estado"
               placeholder="Estado"
-              value={bookData.title}
+              value={bookData.producto_estado}
               onChange={handleInputChange}
               required
             />
@@ -135,6 +172,7 @@ const ManagerForm = () => {
              className="manager-form_inputs"
               type="file"
               accept="image/*"
+              name="myFile" // nombre del archivo que se envía al servidor para que cuadre con la configuración de multer
               onChange={handleImageChange}
             />
             {selectedImage && (
@@ -155,9 +193,9 @@ const ManagerForm = () => {
               cols="50"
               className="manager-form_inputs"
               type="text"
-              name="descripcion"
+              name="producto_descripcion"
               placeholder="Escribe una descripción"
-              value={bookData.title}
+              value={bookData.producto_descripcion}
               onChange={handleInputChange}
               required
             />
