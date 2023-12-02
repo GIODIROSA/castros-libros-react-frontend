@@ -13,15 +13,9 @@ const BookManager = () => {
           <ManagerForm />
         </div>
       ) : (
-        <>
-          {" "}
-          <div>
-            <ManagerForm />
-          </div>
-          <div className="warning">
-            <p>Debes ser administrador para ver esta sección.</p>
-          </div>
-        </>
+        <div className="warning">
+          <p>Debes ser administrador para ver esta sección.</p>
+        </div>
       )}
     </div>
   );

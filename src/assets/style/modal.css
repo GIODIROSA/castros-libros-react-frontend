@@ -1,0 +1,68 @@
+.modal {
+    display: block; /* Asegura que el modal sea visible */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+  }
+
+  .inputs_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ 
+  }
+
+  .inputs_container input {
+    margin-bottom: 5%;
+    margin-left: 5%;
+    padding: 3%;
+    margin-top: 1%;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Estilos para las columnas dentro del modal */
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+    padding: 10px;
+  }
+  
+  /* Estilos para los botones del footer del modal */
+  .modal-footer {
+    text-align: right;
+  }
+  
+  .btn {
+    margin-left: 5px;
+  }

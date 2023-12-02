@@ -3,11 +3,14 @@ import CartIcon from "../assets/icons/cartIcon";
 import { useNavigate } from "react-router-dom";
 import { LibrosContext } from "../context/LibrosContext";
 import "../assets/style/products.css";
+import { UsuarioContext } from "../context/UsuarioContext";
 
 const Products = () => {
   const navigate = useNavigate();
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { setLibroSeleccionado, agregarAlCarrito, productos } = valoresContextoLibros;
+  const { valoresContextoUsuario } = useContext(UsuarioContext);
+  const { usuarioGlobal, setUsuarioGlobal } = valoresContextoUsuario;
 
   // Estado para la paginación
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,7 +84,7 @@ const Products = () => {
                   producto_stock,
                 })}
               >
-                <CartIcon/>
+                <CartIcon color={!usuarioGlobal ? "#80808057" : "black"}/>
               </button>
             </div>
           )

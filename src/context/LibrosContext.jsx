@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import useFetchLibros from "../hook/useFetch";
 import { UsuarioContext } from "./UsuarioContext";
+import axios from "axios";
 
 export const LibrosContext = createContext();
 
@@ -13,6 +14,15 @@ export const LibrosProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
+
+  const getProductos = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/productos?limits=20");
+      setProductos(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const incrementarProducto = (producto) => {
     setCarrito(
@@ -85,6 +95,7 @@ export const LibrosProvider = ({ children }) => {
     setCarrito,
     incrementarProducto,
     decrementarProducto,
+    getProductos
   };
 
   return (

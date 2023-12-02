@@ -55,12 +55,14 @@ const Navbar = () => {
         ) : null}
         <p>|</p>
         <li>
-          <div className="cart-icon-container">
-            <CartIcon color="black" />
-            {carrito && carrito.length < 0 && (
-              <span className="badge">{carrito.length}</span>
-            )}
-          </div>
+          <NavLink to="/cart">
+            <div className="cart-icon-container">
+              <CartIcon color="black" />
+              {carrito && carrito.length > 0 && (
+                <span className="badge">{carrito.length}</span>
+              )}
+            </div>
+          </NavLink>
         </li>
         {!usuarioGlobal || usuarioGlobal.length === 0 ? (
           <li>
