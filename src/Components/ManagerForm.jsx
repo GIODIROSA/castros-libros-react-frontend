@@ -4,73 +4,86 @@ import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrit
 import ManagerGallery from "./ManagerGallery";
 import axios from "axios";
 
-// ManagerForm componente que muestra un formulario para agregar un nuevo libro desde el admin
 const ManagerForm = () => {
-  const [selectedImage, setSelectedImage] = useState(null); // selectedImagen es el estado para almacenar la imagen seleccionada
-  const [bookData, setBookData] = useState({ // bookData es el estado que almacena los datos del libro
+  const [selectedImage, setSelectedImage] = useState(null); // estado de la imagen seleccionada
+  const [bookData, setBookData] = useState({ // estado del resto de los datos del libro (nombre, descripción, precio, etc.)
     producto_nombre: "",
-    producto_imagen: "",
+    imagenProducto: null, // cambié el nombre de producto_imagen a imagenProducto para que coincida con el nombre en el servidor
     producto_descripcion: "",
     producto_precio: "",
     producto_categoria: "",
     producto_autores: "",
     producto_stock: "",
     producto_estado: "",
-   });
+  });
 
-  // función que escucha el cambio en el input de la imagen
   const handleImageChange = (event) => {
-    const file = event.target.files[0]; //obtiene el primer objeto del array de archivos y lo almacena en la variable file
-    console.log("Imagen seleccionada:", file);
+    const file = event.target.files[0];
+
+    //validaciones para subir la imagen
     if (file) {
-      // validación de tipo de archivo
-      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]; //allowedTypes es un array que contiene los tipos de archivos permitidos
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
       if (!allowedTypes.includes(file.type)) {
         alert("Debe cargar una imagen JPEG, PNG o JPG.");
         return;
       }
-  
-      // validación de tamaño de archivo
-      const maxSizeInBytes = 5 * 1024 * 1024; //permite archivos de hasta 5 MB, 1024 bytes = 1 KB, 1024 KB = 1 MB
+
+      const maxSizeInBytes = 5 * 1024 * 1024;
       if (file.size > maxSizeInBytes) {
         alert("El tamaño de la imagen debe ser menor a 5 MB.");
         return;
       }
-  
-      // Si la imagen es válida, la convierte a base64 y la almacena en el estado selectedImage
+
+      // se muestra la imagen seleccionada en el formulario con un FileReader
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
       };
       reader.readAsDataURL(file);
-    }
 
-    console.log("Imagen seleccionada:", file);
+      setBookData({
+        ...bookData,
+        imagenProducto: file,
+      });
+    }
   };
 
-  // función que escucha el cambio en los inputs de texto
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(`Cambio en ${name}:`, value);
     setBookData({
       ...bookData,
       [name]: value,
     });
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     try {
-      // petición para enviar los datos del libro al servidor
-      const response = await axios.post("http://localhost:3001/admin", bookData);
+      // se crea un objeto FormData para enviar los datos del libro, dado que contiene una imagen
+      const formData = new FormData();
+      formData.append("imagenProducto", bookData.imagenProducto);
+      formData.append("producto_nombre", bookData.producto_nombre);
+      formData.append("producto_descripcion", bookData.producto_descripcion);
+      formData.append("producto_precio", bookData.producto_precio);
+      formData.append("producto_categoria", bookData.producto_categoria);
+      formData.append("producto_autores", bookData.producto_autores);
+      formData.append("producto_stock", bookData.producto_stock);
+      formData.append("producto_estado", bookData.producto_estado);
+
+      console.log("Datos del libro:", bookData);
+
+      const response = await axios.post("http://localhost:3001/admin", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // multipart/form-data se usa para enviar archivos mixtos (texto e imagen)
+        },
+      });
       console.log("Respuesta del servidor:", response.data);
-  
-      // limpia el formulario después de enviar los datos
+
+      // limpiamos los campos del formulario una vez que se envían los datos por la petición
       setBookData({
         producto_nombre: "",
-        producto_imagen: "",
+        imagenProducto: null,
         producto_descripcion: "",
         producto_precio: "",
         producto_categoria: "",
@@ -79,8 +92,8 @@ const ManagerForm = () => {
         producto_estado: "",
       });
 
+      // también limpiamos la imagen seleccionada
       setSelectedImage(null);
-  
     } catch (error) {
       console.error("Error al enviar los datos del libro:", error);
     }
@@ -93,7 +106,6 @@ const ManagerForm = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="inputs-container">
-          {" "}
           <div className="manager-form_input-container">
             <label>Titulo</label>
             <input
@@ -169,15 +181,14 @@ const ManagerForm = () => {
           <div className="manager-form_input-container" style={{ display: "flex", flexDirection: "column" }}>
             <label>Imagen</label>
             <input
-             className="manager-form_inputs"
+              className="manager-form_inputs"
               type="file"
               accept="image/*"
-              name="myFile" // nombre del archivo que se envía al servidor para que cuadre con la configuración de multer
               onChange={handleImageChange}
             />
             {selectedImage && (
               <div>
-                <p style={{marginTop: "0px"}}>Preview</p>
+                <p style={{ marginTop: "0px" }}>Preview</p>
                 <img
                   src={selectedImage}
                   alt="Preview"
@@ -200,7 +211,7 @@ const ManagerForm = () => {
               required
             />
           </div>
-        </div>{" "}
+        </div>
         <div className="manager-button_action">
           <ButtonAlCarrito type="submit">Subir Producto</ButtonAlCarrito>
         </div>
