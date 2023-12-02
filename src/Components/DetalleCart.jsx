@@ -1,6 +1,7 @@
 import axios from "axios";
 import "../assets/style/detalleCart.css";
 import { LibrosContext } from "../context/LibrosContext";
+import { UsuarioContext } from "../context/UsuarioContext";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 const DetalleCart = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { carrito, incrementarProducto, decrementarProducto, totalCarrito } = valoresContextoLibros;
+  const { valoresContextoUsuario } = useContext(UsuarioContext);
+  const { usuarioGlobal } = valoresContextoUsuario;
 
   const navigate = useNavigate();
 
@@ -21,7 +24,7 @@ const DetalleCart = () => {
       // construcción del objeto de pedido con la estructura que espera el servidor
       const pedido = {
         pedido_fecha: new Date().toISOString(),
-        usuario_id: 2,
+        usuario_id: usuarioGlobal.usuario_id,
         pedido_estado: false,
         detalle_pedido: carritoFiltrado.map(item => ({
           detalle_cantidad: item.cantidad,
