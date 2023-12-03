@@ -113,6 +113,39 @@ export const LibrosProvider = ({ children }) => {
     });
   };
 
+  //Función para modificar producto 
+  const handleUpdateProduct = async (id, nombre, precio) => {
+    console.log(id, nombre, precio);
+
+    Swal.fire({
+      title: "¿Esta seguro de modificar este producto?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5d573f",
+      cancelButtonColor: "#b3ae8df9",
+      confirmButtonText: "Guardar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.put(
+            `http://localhost:3001/admin/${id}?producto_nombre=${nombre}&producto_precio=${precio}`
+          );
+          getProductos();
+        } catch (error) {
+          console.error("Error al actualizar el producto:", error);
+
+          Swal.fire({
+            icon: "error",
+            title: "Atención",
+            text: "No se puede modificar este producto",
+          });
+          return;
+        }
+      }
+    });
+  };
+
 
 
 
@@ -211,7 +244,8 @@ export const LibrosProvider = ({ children }) => {
     setStock,
     setCategoria,
     setEstado,
-    eliminarProducto
+    eliminarProducto,
+    handleUpdateProduct
     };
 
   return (

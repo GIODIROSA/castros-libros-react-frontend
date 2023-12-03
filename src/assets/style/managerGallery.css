@@ -28,6 +28,12 @@
   padding: 15px;
 }
 
+.img-fluid {
+  width: 90%;
+  height: auto;
+  object-fit: cover;
+}
+
 .icon-container {
   margin-bottom: 10%;
 }
