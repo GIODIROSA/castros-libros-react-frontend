@@ -79,6 +79,43 @@ export const LibrosProvider = ({ children }) => {
   };
 
 
+
+
+
+  const eliminarProducto = async (idProducto) => {
+    Swal.fire({
+      title: "¿Esta seguro de eliminar este producto?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5d573f",
+      cancelButtonColor: "#b3ae8df9",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.delete(
+            `http://localhost:3001/admin/${idProducto}`
+          );
+          console.log("Producto eliminado exitosamente:", response.data);
+          await getProductos();
+        } catch (error) {
+          console.error("Error al eliminar el producto:", error);
+
+          Swal.fire({
+            icon: "error",
+            title: "Atención",
+            text: "No se puede eliminar este producto porque es parte de un pedido",
+          });
+          return;
+        }
+      }
+    });
+  };
+
+
+
+
   const getProductos = async () => {
     try {
       const response = await axios.get("http://localhost:3001/productos?limits=20");
@@ -173,7 +210,8 @@ export const LibrosProvider = ({ children }) => {
     setImagen,
     setStock,
     setCategoria,
-    setEstado
+    setEstado,
+    eliminarProducto
     };
 
   return (

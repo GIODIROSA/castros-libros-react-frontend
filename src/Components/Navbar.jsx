@@ -59,7 +59,7 @@ const Navbar = () => {
             <div className="cart-icon-container">
               <CartIcon color="black" />
               {carrito && carrito.length > 0 && (
-                <span className="badge"></span>
+                <span className="badge">{/* {carrito.length} */}</span>
               )}
             </div>
           </NavLink>
