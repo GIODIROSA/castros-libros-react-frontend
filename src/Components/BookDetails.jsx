@@ -33,14 +33,14 @@ const BookDetail = () => {
   }, []);
 
   const handleIncrement = () => {
+    incrementarProducto(libroSeleccionado, quantity);
     setQuantity(quantity + 1);
-    incrementarProducto(libroSeleccionado);
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
+      decrementarProducto(libroSeleccionado, quantity);
       setQuantity(quantity - 1);
-      decrementarProducto(libroSeleccionado);
     }
   };
 
@@ -82,7 +82,7 @@ const BookDetail = () => {
                   producto_autores,
                   producto_precio,
                   producto_stock,
-                })
+                }, quantity)
               }
               className={
                 usuarioGlobal
@@ -93,7 +93,6 @@ const BookDetail = () => {
               Agregar al carrito
             </button>
           </div>
-          {/* <button className="add-to-favorites">Agregar a Favoritos</button> */}
         </div>
       </div>
     </div>

@@ -159,19 +159,18 @@ export const LibrosProvider = ({ children }) => {
   };
 
   const incrementarProducto = (producto) => {
-    setCarrito(
-      carrito.map((item) =>
+    setCarrito((prevCarrito) =>
+      prevCarrito.map((item) =>
         item.producto_id === producto.producto_id
           ? { ...item, cantidad: item.cantidad + 1 }
           : item
       )
     );
-    console.log(carrito);
   };
-
+  
   const decrementarProducto = (producto) => {
-    setCarrito(
-      carrito.map((item) =>
+    setCarrito((prevCarrito) =>
+      prevCarrito.map((item) =>
         item.producto_id === producto.producto_id
           ? { ...item, cantidad: Math.max(0, item.cantidad - 1) }
           : item
@@ -221,6 +220,10 @@ export const LibrosProvider = ({ children }) => {
     setCarrito([]);
   };
 
+  const calcularCantidadTotal = () => {
+    return carrito.reduce((total, item) => total + item.cantidad, 0);
+  };
+
   const valoresContextoLibros = {
     productos,
     libroSeleccionado,
@@ -245,7 +248,8 @@ export const LibrosProvider = ({ children }) => {
     setCategoria,
     setEstado,
     eliminarProducto,
-    handleUpdateProduct
+    handleUpdateProduct,
+    calcularCantidadTotal
     };
 
   return (

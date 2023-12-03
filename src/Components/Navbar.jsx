@@ -10,7 +10,7 @@ import { LibrosContext } from "../context/LibrosContext";
 
 const Navbar = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const { carrito } = valoresContextoLibros;
+  const { carrito, calcularCantidadTotal } = valoresContextoLibros;
   const profileIconSvg = profileIcon();
   const logoNavBarSvg = logoNavBar();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
@@ -59,7 +59,7 @@ const Navbar = () => {
             <div className="cart-icon-container">
               <CartIcon color="black" />
               {carrito && carrito.length > 0 && (
-                <span className="badge">{/* {carrito.length} */}</span>
+                <span className="badge">{calcularCantidadTotal()}</span>
               )}
             </div>
           </NavLink>
