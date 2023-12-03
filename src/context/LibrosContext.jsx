@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState} from "react";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import useFetchLibros from "../hook/useFetch";
@@ -15,6 +15,67 @@ export const LibrosProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
+  //estados para el formulario de agregar libro desde el admin
+  const [titulo, setTitulo] = useState("");
+  const [autor, setAutor] = useState("");
+  const [precio, setPrecio] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [imagen, setImagen] = useState(null);
+  const [stock, setStock] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [estado, setEstado] = useState("");
+
+  const agregarLibro = async (e) => {
+    e.preventDefault();
+  
+    //libroData objeto con los detalles del libro
+    const libroData = {
+      producto_nombre: titulo,
+      producto_descripcion: descripcion,
+      producto_precio: precio,
+      producto_categoria: categoria,
+      producto_autores: autor,
+      producto_stock: stock,
+      producto_estado: estado,
+    };
+  
+    // se crea objeto tipo FormData y se le adjunta el JSON del producto
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(libroData)); // *******UN ÚNICO JSON CON TODOS LOS DATOS DEL PRODUCTO******
+    formData.append("imagenProducto", imagen); // luego se adjunta la imagen al FormData
+
+    console.log("formData", formData);
+  
+    try {
+      const response = await axios.post("http://localhost:3001/admin", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      console.log("response", response.data);
+  
+      Swal.fire({
+        icon: 'success',
+        title: '¡Libro agregado!',
+        text: `El libro "${titulo}" se agregó correctamente`
+      });
+  
+      // limpiamos el formulario
+      setTitulo("");
+      setAutor("");
+      setPrecio("");
+      setDescripcion("");
+      setImagen(null);
+      setStock("");
+      setCategoria("");
+      setEstado("");
+  
+    } catch (error) {
+      console.error("Error al agregar el libro:", error);
+    }
+  };
+
 
   const getProductos = async () => {
     try {
@@ -84,6 +145,10 @@ export const LibrosProvider = ({ children }) => {
 
   useFetchLibros(setProductos);
 
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
   const valoresContextoLibros = {
     productos,
     libroSeleccionado,
@@ -96,8 +161,18 @@ export const LibrosProvider = ({ children }) => {
     setCarrito,
     incrementarProducto,
     decrementarProducto,
-    getProductos
-  };
+    getProductos,
+    vaciarCarrito,
+    agregarLibro,
+    setTitulo,
+    setAutor,
+    setPrecio,
+    setDescripcion,
+    setImagen,
+    setStock,
+    setCategoria,
+    setEstado
+    };
 
   return (
     <LibrosContext.Provider value={{ valoresContextoLibros }}>
