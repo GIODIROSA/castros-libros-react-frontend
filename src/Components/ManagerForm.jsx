@@ -2,11 +2,11 @@ import "../assets/style/managerForm.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import ManagerGallery from "./ManagerGallery";
 import { LibrosContext } from "../context/LibrosContext";
-import { useContext, useEffect} from "react";
+import { useContext} from "react";
 
 const ManagerForm = () => {
- const { valoresContextoLibros } = useContext(LibrosContext);
-  const {     
+  const { valoresContextoLibros } = useContext(LibrosContext);
+  const {
     agregarLibro,
     setTitulo,
     setAutor,
@@ -15,16 +15,23 @@ const ManagerForm = () => {
     setImagen,
     setStock,
     setCategoria,
-    setEstado, getProductos} = valoresContextoLibros;
+    setEstado,
+    getProductos
+  } = valoresContextoLibros;
 
+  const handleChange = (event, setterFunction) => {
+    const valor =
+      event.target.type === "file" ? event.target.files[0] : event.target.value;
+    console.log(`${event.target.name}:`, valor);
+    setterFunction(valor);
+  };
 
-    const handleChange = (event, setterFunction) => { //setterFunction es la función que se va a ejecutar para cambiar el estado de cada input
-      const valor = event.target.type === 'file' ? event.target.files[0] : event.target.value; // si el input es de tipo file, se toma el primer archivo del array de archivos
-      console.log(`${event.target.name}:`, valor);
-      setterFunction(valor); 
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await agregarLibro(e);
+    await getProductos();
+  };
 
-    
 
   return (
     <div className="book-form-container">
@@ -32,7 +39,7 @@ const ManagerForm = () => {
         <h4>Agregar Producto</h4>
       </div>
       {/* form */}
-      <form onSubmit={agregarLibro}>
+      <form onSubmit={handleSubmit}>
         <div className="inputs-container">
           <div className="manager-form_input-container">
             <label>Titulo</label>
