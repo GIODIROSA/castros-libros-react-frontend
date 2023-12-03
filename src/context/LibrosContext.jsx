@@ -71,6 +71,8 @@ export const LibrosProvider = ({ children }) => {
       setCategoria("");
       setEstado("");
   
+
+      getProductos()
     } catch (error) {
       console.error("Error al agregar el libro:", error);
     }

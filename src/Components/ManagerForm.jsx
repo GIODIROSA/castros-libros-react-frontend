@@ -2,7 +2,7 @@ import "../assets/style/managerForm.css";
 import { ButtonAlCarrito } from "../assets/style/styledComponents/buttonAlCarrito";
 import ManagerGallery from "./ManagerGallery";
 import { LibrosContext } from "../context/LibrosContext";
-import { useContext} from "react";
+import { useContext, useEffect} from "react";
 
 const ManagerForm = () => {
  const { valoresContextoLibros } = useContext(LibrosContext);
@@ -15,7 +15,7 @@ const ManagerForm = () => {
     setImagen,
     setStock,
     setCategoria,
-    setEstado} = valoresContextoLibros;
+    setEstado, getProductos} = valoresContextoLibros;
 
 
     const handleChange = (event, setterFunction) => { //setterFunction es la función que se va a ejecutar para cambiar el estado de cada input
@@ -23,6 +23,8 @@ const ManagerForm = () => {
       console.log(`${event.target.name}:`, valor);
       setterFunction(valor); 
     };
+
+    
 
   return (
     <div className="book-form-container">
