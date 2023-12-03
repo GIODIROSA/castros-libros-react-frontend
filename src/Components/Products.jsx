@@ -38,7 +38,7 @@ const Products = () => {
 
   return (
     <div className="castros_products__contenedor">
-      <h1 className="castros_products__titulo">Productos</h1>
+      <h1 className="castros_products__titulo">Galería de productos</h1>
       <div className="castros_products__contenedor_cards">
         {currentProducts.map(
           ({

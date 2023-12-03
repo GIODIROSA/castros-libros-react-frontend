@@ -7,7 +7,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
-  const { libroSeleccionado, agregarAlCarrito } = valoresContextoLibros;
+  const { libroSeleccionado, agregarAlCarrito, incrementarProducto, decrementarProducto } = valoresContextoLibros;
   const navigate = useNavigate();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
@@ -34,11 +34,13 @@ const BookDetail = () => {
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
+    incrementarProducto(libroSeleccionado);
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      decrementarProducto(libroSeleccionado);
     }
   };
 
