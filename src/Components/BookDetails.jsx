@@ -6,8 +6,8 @@ import { UsuarioContext } from "../context/UsuarioContext";
 
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const [quantity, setQuantity] = useState(1);
-  const { libroSeleccionado, agregarAlCarrito, incrementarProducto, decrementarProducto } = valoresContextoLibros;
+  const [quantity] = useState(1);
+  const { libroSeleccionado, agregarAlCarrito } = valoresContextoLibros;
   const navigate = useNavigate();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
@@ -32,18 +32,6 @@ const BookDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleIncrement = () => {
-    incrementarProducto(libroSeleccionado, quantity);
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      decrementarProducto(libroSeleccionado, quantity);
-      setQuantity(quantity - 1);
-    }
-  };
-
   return (
     <div className="book-detail_container">
       <div className="book-detail">
@@ -62,16 +50,6 @@ const BookDetail = () => {
           <p className="book-price">Precio: ${producto_precio}</p>
           <p className="book-description">{producto_descripcion}</p>
           <div className="quantity-container">
-            <div className="quantity-buttons">
-              <button className="quantity-button" onClick={handleDecrement}>
-                -
-              </button>
-              <span className="quantity">{quantity}</span>
-              <button className="quantity-button" onClick={handleIncrement}>
-                +
-              </button>
-            </div>
-
             <button
               onClick={() =>
                 agregarAlCarrito({
