@@ -4,8 +4,6 @@ import { LibrosContext } from "../context/LibrosContext";
 import { deleteIcon } from "../assets/icons/deleteIcon";
 import editIcon from "../assets/icons/editIcon";
 import "../assets/style/modal.css";
-import axios from "axios";
-import Swal from "sweetalert2";
 
 const ManagerGallery = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
@@ -19,37 +17,6 @@ const ManagerGallery = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  /* const handleUpdateProduct = async (id, nombre, precio) => {
-    console.log(id, nombre, precio);
-
-    Swal.fire({
-      title: "¿Esta seguro de modificar este producto?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#5d573f",
-      cancelButtonColor: "#b3ae8df9",
-      confirmButtonText: "Guardar",
-      cancelButtonText: "Cancelar",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.put(
-            `http://localhost:3001/admin/${id}?producto_nombre=${nombre}&producto_precio=${precio}`
-          );
-          getProductos();
-        } catch (error) {
-          console.error("Error al actualizar el producto:", error);
-
-          Swal.fire({
-            icon: "error",
-            title: "Atención",
-            text: "No se puede modificar este producto",
-          });
-          return;
-        }
-      }
-    });
-  }; */
   return (
     <div className="manager-gallery">
       {productos.map((item) => (
