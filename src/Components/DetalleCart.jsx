@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const DetalleCart = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
-  const { carrito, incrementarProducto, decrementarProducto, totalCarrito } = valoresContextoLibros;
+  const { carrito, incrementarProducto, decrementarProducto, totalCarrito, vaciarCarrito } = valoresContextoLibros;
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
 
@@ -54,6 +54,8 @@ const DetalleCart = () => {
           text: 'El pedido se creó correctamente',
         });
   
+        vaciarCarrito();
+        
         // Redirige al usuario a la página de inicio
         navigate('/');
       }

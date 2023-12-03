@@ -58,44 +58,46 @@ const ManagerForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    
     try {
-      // se crea un objeto FormData para enviar los datos del libro, dado que contiene una imagen
       const formData = new FormData();
-      formData.append("imagenProducto", bookData.imagenProducto);
-      formData.append("producto_nombre", bookData.producto_nombre);
-      formData.append("producto_descripcion", bookData.producto_descripcion);
-      formData.append("producto_precio", bookData.producto_precio);
-      formData.append("producto_categoria", bookData.producto_categoria);
-      formData.append("producto_autores", bookData.producto_autores);
-      formData.append("producto_stock", bookData.producto_stock);
-      formData.append("producto_estado", bookData.producto_estado);
-
-      console.log("Datos del libro:", bookData);
-
-      const response = await axios.post("http://localhost:3001/admin", formData, {
+      formData.append("imagenProducto", bookData.imagenProducto); // agregué el archivo de imagen al objeto FormData para cargarlo a la carpeta uploads
+  
+      const imageUploadResponse = await axios.post("http://localhost:3001/admin", formData, { // esta parte no la está tomando el servidor
         headers: {
-          "Content-Type": "multipart/form-data", // multipart/form-data se usa para enviar archivos mixtos (texto e imagen)
+          "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Respuesta del servidor:", response.data);
-
-      // limpiamos los campos del formulario una vez que se envían los datos por la petición
-      setBookData({
-        producto_nombre: "",
-        imagenProducto: null,
-        producto_descripcion: "",
-        producto_precio: "",
-        producto_categoria: "",
-        producto_autores: "",
-        producto_stock: "",
-        producto_estado: "",
+  
+      // obtener el nombre del archivo de la imagen subida para construir la URL de la imagen
+      const originalFileName = bookData.imagenProducto.name;
+      const imagenProductoURL = `uploads/${originalFileName}`;
+  
+      //JSON con la información del libro y la URL de la imagen
+      const bookJson = {
+        producto_nombre: bookData.producto_nombre,
+        producto_descripcion: bookData.producto_descripcion,
+        producto_precio: bookData.producto_precio,
+        producto_categoria: bookData.producto_categoria,
+        producto_autores: bookData.producto_autores,
+        producto_stock: bookData.producto_stock,
+        producto_estado: bookData.producto_estado,
+        imagenProductoURL: imagenProductoURL, // este dato debería ser un string como "uploads/nombre_de_la_imagen.jpg"
+      };
+  
+      // enviamos JSON actualizado que contiene la URL de la imagen, pero no la imagen en sí
+      const response = await axios.post("http://localhost:3001/admin", bookJson, {
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
-
-      // también limpiamos la imagen seleccionada
-      setSelectedImage(null);
+  
+      console.log("Respuesta del servidor:", response.data);
+  
+  
     } catch (error) {
       console.error("Error al enviar los datos del libro:", error);
+      console.log("Respuesta del servidor (error):", error.response ? error.response.data : error.message);
     }
   };
 

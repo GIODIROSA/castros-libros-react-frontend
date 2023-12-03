@@ -83,6 +83,10 @@ export const LibrosProvider = ({ children }) => {
 
   useFetchLibros(setProductos);
 
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
   const valoresContextoLibros = {
     productos,
     libroSeleccionado,
@@ -95,7 +99,8 @@ export const LibrosProvider = ({ children }) => {
     setCarrito,
     incrementarProducto,
     decrementarProducto,
-    getProductos
+    getProductos,
+    vaciarCarrito
   };
 
   return (
