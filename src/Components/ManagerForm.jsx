@@ -16,7 +16,6 @@ const ManagerForm = () => {
     setStock,
     setCategoria,
     setEstado,
-    getProductos
   } = valoresContextoLibros;
 
   const handleChange = (event, setterFunction) => {
@@ -29,7 +28,6 @@ const ManagerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await agregarLibro(e);
-    await getProductos();
   };
 
 
