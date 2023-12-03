@@ -32,6 +32,13 @@ const ManagerGallery = () => {
           await getProductos();
         } catch (error) {
           console.error("Error al eliminar el producto:", error);
+
+          Swal.fire({
+            icon: "error",
+            title: "Atención",
+            text: "No se puede eliminar este producto porque es parte de un pedido",
+          });
+          return;
         }
       }
     });

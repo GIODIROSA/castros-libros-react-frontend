@@ -10,7 +10,7 @@ const Products = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const { setLibroSeleccionado, agregarAlCarrito, productos } = valoresContextoLibros;
   const { valoresContextoUsuario } = useContext(UsuarioContext);
-  const { usuarioGlobal, setUsuarioGlobal } = valoresContextoUsuario;
+  const { usuarioGlobal } = valoresContextoUsuario;
 
   // Estado para la paginación
   const [currentPage, setCurrentPage] = useState(1);

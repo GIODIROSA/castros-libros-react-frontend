@@ -3,7 +3,7 @@ import "../assets/style/navbar.css";
 import CartIcon from "../assets/icons/cartIcon";
 import profileIcon from "../assets/icons/profileIcon";
 import logoNavBar from "../assets/icons/logoNavBar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UsuarioContext } from "../context/UsuarioContext";
 import Swal from "sweetalert2";
 import { LibrosContext } from "../context/LibrosContext";
@@ -59,7 +59,7 @@ const Navbar = () => {
             <div className="cart-icon-container">
               <CartIcon color="black" />
               {carrito && carrito.length > 0 && (
-                <span className="badge">{carrito.length}</span>
+                <span className="badge"></span>
               )}
             </div>
           </NavLink>

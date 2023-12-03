@@ -7,6 +7,7 @@ import axios from "axios";
 
 export const LibrosContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const LibrosProvider = ({ children }) => {
   const [productos, setProductos] = useState([]);
   const [libroSeleccionado, setLibroSeleccionado] = useState("");

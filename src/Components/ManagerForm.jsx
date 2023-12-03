@@ -6,7 +6,8 @@ import axios from "axios";
 
 const ManagerForm = () => {
   const [selectedImage, setSelectedImage] = useState(null); // estado de la imagen seleccionada
-  const [bookData, setBookData] = useState({ // estado del resto de los datos del libro (nombre, descripción, precio, etc.)
+  const [bookData, setBookData] = useState({
+    // estado del resto de los datos del libro (nombre, descripción, precio, etc.)
     producto_nombre: "",
     imagenProducto: null, // cambié el nombre de producto_imagen a imagenProducto para que coincida con el nombre en el servidor
     producto_descripcion: "",
@@ -73,11 +74,15 @@ const ManagerForm = () => {
 
       console.log("Datos del libro:", bookData);
 
-      const response = await axios.post("http://localhost:3001/admin", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // multipart/form-data se usa para enviar archivos mixtos (texto e imagen)
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3001/admin",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // multipart/form-data se usa para enviar archivos mixtos (texto e imagen)
+          },
+        }
+      );
       console.log("Respuesta del servidor:", response.data);
 
       // limpiamos los campos del formulario una vez que se envían los datos por la petición
@@ -178,7 +183,10 @@ const ManagerForm = () => {
               required
             />
           </div>
-          <div className="manager-form_input-container" style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            className="manager-form_input-container"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <label>Imagen</label>
             <input
               className="manager-form_inputs"

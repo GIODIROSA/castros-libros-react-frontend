@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import ManagerForm from "../Components/ManagerForm";
-import "../assets/style/bookManager.css";
 import { UsuarioContext } from "../context/UsuarioContext";
+import Warning from "../Components/Warning";
 
 const BookManager = () => {
   const { valoresContextoUsuario } = useContext(UsuarioContext);
@@ -13,9 +13,7 @@ const BookManager = () => {
           <ManagerForm />
         </div>
       ) : (
-        <div className="warning">
-          <p>Debes ser administrador para ver esta sección.</p>
-        </div>
+        <Warning rol="administrador"/>
       )}
     </div>
   );

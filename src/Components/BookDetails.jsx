@@ -7,8 +7,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 const BookDetail = () => {
   const { valoresContextoLibros } = useContext(LibrosContext);
   const [quantity, setQuantity] = useState(1);
-  const {  libroSeleccionado, agregarAlCarrito, productos} = valoresContextoLibros;
-  const { setLibroSeleccionado,  } = valoresContextoLibros;
+  const { libroSeleccionado, agregarAlCarrito } = valoresContextoLibros;
   const navigate = useNavigate();
   const { valoresContextoUsuario } = useContext(UsuarioContext);
   const { usuarioGlobal } = valoresContextoUsuario;
@@ -20,7 +19,7 @@ const BookDetail = () => {
     producto_imagen,
     producto_autores,
     producto_id,
-    producto_stock
+    producto_stock,
   } = libroSeleccionado;
 
   useEffect(() => {
@@ -71,7 +70,9 @@ const BookDetail = () => {
               </button>
             </div>
 
-            <button  onClick={() => agregarAlCarrito({
+            <button
+              onClick={() =>
+                agregarAlCarrito({
                   producto_id,
                   producto_imagen,
                   producto_nombre,
@@ -79,7 +80,8 @@ const BookDetail = () => {
                   producto_autores,
                   producto_precio,
                   producto_stock,
-                })}
+                })
+              }
               className={
                 usuarioGlobal
                   ? "libreria-castro__boton-agregar-carrito"
