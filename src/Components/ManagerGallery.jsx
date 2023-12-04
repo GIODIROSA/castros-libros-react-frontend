@@ -20,7 +20,7 @@ const ManagerGallery = () => {
   return (
     <div className="manager-gallery">
       {productos.map((item) => (
-        <div className="card" key={item.id}>
+        <div className="card" key={item.producto_id}>
           <img
             src={`http://localhost:3001/${item.producto_imagen}`}
             alt={item.title}

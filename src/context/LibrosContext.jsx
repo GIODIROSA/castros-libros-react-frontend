@@ -1,6 +1,6 @@
-import { createContext, useContext, useState} from "react";
-import Swal from 'sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
+import { createContext, useContext, useState } from "react";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import useFetchLibros from "../hook/useFetch";
 import { UsuarioContext } from "./UsuarioContext";
 import axios from "axios";
@@ -27,7 +27,7 @@ export const LibrosProvider = ({ children }) => {
 
   const agregarLibro = async (e) => {
     e.preventDefault();
-  
+
     //libroData objeto con los detalles del libro
     const libroData = {
       producto_nombre: titulo,
@@ -38,29 +38,33 @@ export const LibrosProvider = ({ children }) => {
       producto_stock: stock,
       producto_estado: estado,
     };
-  
+
     // se crea objeto tipo FormData y se le adjunta el JSON del producto
     const formData = new FormData();
     formData.append("data", JSON.stringify(libroData)); // *******UN ÚNICO JSON CON TODOS LOS DATOS DEL PRODUCTO******
     formData.append("imagenProducto", imagen); // luego se adjunta la imagen al FormData
 
     console.log("formData", formData);
-  
+
     try {
-      const response = await axios.post("http://localhost:3001/admin", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:3001/admin",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       console.log("response", response.data);
-  
+
       Swal.fire({
-        icon: 'success',
-        title: '¡Libro agregado!',
-        text: `El libro "${titulo}" se agregó correctamente`
+        icon: "success",
+        title: "¡Libro agregado!",
+        text: `El libro "${titulo}" se agregó correctamente`,
       });
-  
+
       // limpiamos el formulario
       setTitulo("");
       setAutor("");
@@ -70,17 +74,12 @@ export const LibrosProvider = ({ children }) => {
       setStock("");
       setCategoria("");
       setEstado("");
-  
 
-      getProductos()
+      getProductos();
     } catch (error) {
       console.error("Error al agregar el libro:", error);
     }
   };
-
-
-
-
 
   const eliminarProducto = async (idProducto) => {
     Swal.fire({
@@ -113,7 +112,7 @@ export const LibrosProvider = ({ children }) => {
     });
   };
 
-  //Función para modificar producto 
+  //Función para modificar producto
   const handleUpdateProduct = async (id, nombre, precio) => {
     console.log(id, nombre, precio);
 
@@ -146,12 +145,11 @@ export const LibrosProvider = ({ children }) => {
     });
   };
 
-
-
-
   const getProductos = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/productos?limits=20");
+      const response = await axios.get(
+        "http://localhost:3001/productos?limits=20"
+      );
       setProductos(response.data);
     } catch (err) {
       console.log(err);
@@ -167,7 +165,7 @@ export const LibrosProvider = ({ children }) => {
       )
     );
   };
-  
+
   const decrementarProducto = (producto) => {
     setCarrito((prevCarrito) =>
       prevCarrito.map((item) =>
@@ -181,38 +179,46 @@ export const LibrosProvider = ({ children }) => {
   const agregarAlCarrito = (detalles) => {
     if (!usuarioGlobal) {
       Swal.fire({
-        icon: 'error',
-        title: 'Atención',
-        text: 'Debes iniciar sesión para poder agregar libros a tu carrito'
+        icon: "error",
+        title: "Atención",
+        text: "Debes iniciar sesión para poder agregar libros a tu carrito",
       });
       return;
     }
     if (detalles.producto_stock < 1) {
       Swal.fire({
-        icon: 'error',
-        title: '¡Producto sin stock!',
-        text: `El libro "${detalles.producto_nombre}" no se encuentra disponible en este momento`
+        icon: "error",
+        title: "¡Producto sin stock!",
+        text: `El libro "${detalles.producto_nombre}" no se encuentra disponible en este momento`,
       });
       return;
     }
 
-    const productoExistente = carrito.find(item => item.producto_id === detalles.producto_id);
+    const productoExistente = carrito.find(
+      (item) => item.producto_id === detalles.producto_id
+    );
 
     if (productoExistente) {
       incrementarProducto(productoExistente);
     } else {
-      setCarrito(prevCarrito => [...prevCarrito, { ...detalles, cantidad: 1 }]);
+      setCarrito((prevCarrito) => [
+        ...prevCarrito,
+        { ...detalles, cantidad: 1 },
+      ]);
     }
 
     Swal.fire({
-      icon: 'success',
-      title: '¡Producto agregado!',
-      text: `Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`
+      icon: "success",
+      title: "¡Producto agregado!",
+      text: `Haz agregado el libro "${detalles.producto_nombre}" a tu carrito de compras`,
     });
     console.log(carrito);
   };
 
-  const totalCarrito = carrito.reduce((acc, item) => acc + item.producto_precio * item.cantidad, 0);
+  const totalCarrito = carrito.reduce(
+    (acc, item) => acc + item.producto_precio * item.cantidad,
+    0
+  );
 
   useFetchLibros(setProductos);
 
@@ -249,8 +255,8 @@ export const LibrosProvider = ({ children }) => {
     setEstado,
     eliminarProducto,
     handleUpdateProduct,
-    calcularCantidadTotal
-    };
+    calcularCantidadTotal,
+  };
 
   return (
     <LibrosContext.Provider value={{ valoresContextoLibros }}>
