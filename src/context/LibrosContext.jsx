@@ -249,7 +249,14 @@ export const LibrosProvider = ({ children }) => {
     setEstado,
     eliminarProducto,
     handleUpdateProduct,
-    calcularCantidadTotal
+    calcularCantidadTotal,
+    titulo,
+    autor,
+    precio,
+    descripcion,
+    stock,
+    categoria,
+    estado,
     };
 
   return (
